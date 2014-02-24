@@ -1,7 +1,7 @@
 === A5 Recent Post Widget ===
 Contributors: tepelstreel
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YGA57UKZQVP4A
-Tags: sidebar, widget, post, newspaper, recent post, feature, spotlight, random post
+Tags: sidebar, widget, post, newspaper, recent post, feature, spotlight, flexible
 Requires at least: 2.7
 Tested up to: 3.9
 Stable tag: 2.0
