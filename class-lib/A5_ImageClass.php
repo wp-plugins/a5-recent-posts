@@ -5,7 +5,7 @@
  * Class A5 Images
  *
  * @ A5 Plugin Framework
- * Version: 0.9.8 alpha
+ * Version: 0.9.9 alpha
  *
  * Gets the alt and title tag for attachments
  *

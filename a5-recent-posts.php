@@ -3,7 +3,7 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.0
+Version: 2.1
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
@@ -39,13 +39,7 @@ if (!class_exists('A5_Excerpt')) require_once RPW_PATH.'class-lib/A5_ExcerptClas
 if (!class_exists('A5_Recent_Post_Widget')) require_once RPW_PATH.'class-lib/RPW_WidgetClass.php';
 if (!class_exists('A5_FormField')) require_once RPW_PATH.'class-lib/A5_FormFieldClass.php';
 if (!class_exists('A5_OptionPage')) require_once RPW_PATH.'class-lib/A5_OptionPageClass.php';
-if (!class_exists('A5_DynamicCSS')) :
-
-	require_once RPW_PATH.'class-lib/A5_DynamicCSSClass.php';
-	
-	$dynamic_css = new A5_DynamicCSS;
-	
-endif;
+if (!class_exists('A5_DynamicCSS')) require_once RPW_PATH.'class-lib/A5_DynamicCSSClass.php';
 
 class RecentPostWidget {
 
@@ -71,20 +65,28 @@ class RecentPostWidget {
 
 		load_plugin_textdomain(self::language_file, false , basename(dirname(__FILE__)).'/languages');
 		
+		$dynamic_css = new A5_DynamicCSS;
+		
 		$eol = "\r\n";
 		$tab = "\t";
 		
+		$css_selector = '.widget_a5_recent_post_widget[id^="a5_recent_post_widget"]';
+		
 		A5_DynamicCSS::$styles .= $eol.'/* CSS portion of the A5 Recent Post Widget */'.$eol.$eol;
 		
-		A5_DynamicCSS::$styles.='div[id^="a5_recent_post_widget"].widget_a5_recent_post_widget img {'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
+		$style = '-moz-hyphens: auto;'.$eol.$tab.'-o-hyphens: auto;'.$eol.$tab.'-webkit-hyphens: auto;'.$eol.$tab.'-ms-hyphens: auto;'.$eol.$tab.'hyphens: auto;';
 		
-		A5_DynamicCSS::$styles.='div[id^="a5_recent_post_widget"].widget_a5_recent_post_widget {'.$eol.$tab.'-moz-hyphens: auto;'.$eol.$tab.'-o-hyphens: auto;'.$eol.$tab.'-webkit-hyphens: auto;'.$eol.$tab.'-ms-hyphens: auto;'.$eol.$tab.'hyphens: auto; '.$eol.'}'.$eol;
+		if (!empty(self::$options['rpw_css'])) $style.=$eol.$tab.str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['rpw_css']));
+		
+		A5_DynamicCSS::$styles.='div'.$css_selector.','.$eol.'li'.$css_selector.','.$eol.'aside'.$css_selector.' {'.$eol.$tab.$style.$eol.'}'.$eol;
+		
+		A5_DynamicCSS::$styles.='div'.$css_selector.' img,'.$eol.'li'.$css_selector.' img,'.$eol.'aside'.$css_selector.' img {'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
 		
 		if (!empty (self::$options['link'])) :
 		
 			$style=str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['link']));
 		
-			A5_DynamicCSS::$styles.='div[id^="a5_recent_post_widget"].widget_a5_recent_post_widget a {'.$eol.$tab.$style.$eol.'}'.$eol;
+			A5_DynamicCSS::$styles.='div'.$css_selector.' a,'.$eol.'li'.$css_selector.' a,'.$eol.'aside'.$css_selector.' a {'.$eol.$tab.$style.$eol.'}'.$eol;
 			
 		endif;
 		
@@ -92,7 +94,7 @@ class RecentPostWidget {
 		
 			$style=str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['hover']));
 		
-			A5_DynamicCSS::$styles.='div[id^="a5_recent_post_widget"].widget_a5_recent_post_widget a:hover {'.$eol.$tab.$style.$eol.'}'.$eol;
+			A5_DynamicCSS::$styles.='div'.$css_selector.' a:hover,'.$eol.'li'.$css_selector.' a:hover,'.$eol.'aside'.$css_selector.' a:hover {'.$eol.$tab.$style.$eol.'}'.$eol;
 			
 		endif;
 		
@@ -115,7 +117,7 @@ class RecentPostWidget {
 		
 		$base = plugin_basename(__FILE__);
 		if ($file == $base) {
-			$links[] = '<a href="http://wordpress.org/extend/plugins/advanced-category-column/faq/" target="_blank">'.__('FAQ', self::language_file).'</a>';
+			$links[] = '<a href="http://wordpress.org/extend/plugins/a5-recent-posts/faq/" target="_blank">'.__('FAQ', self::language_file).'</a>';
 			$links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YGA57UKZQVP4A" target="_blank">'.__('Donate', self::language_file).'</a>';
 		}
 		
@@ -144,6 +146,8 @@ class RecentPostWidget {
 		
 		add_settings_field('rpw_hover_style', __('Hover style:', self::language_file), array($this, 'hover_field'), 'rpw_styles', 'rpw_settings');
 		
+		add_settings_field('use_own_css', __('Widget container:', self::language_file), array($this, 'rpw_display_css'), 'rpw_styles', 'rpw_settings', array(__('You can enter your own style for the widgets here. This will overwrite the styles of your theme.', self::language_file), __('If you leave this empty, you can still style every instance of the widget individually.', self::language_file)));
+		
 		add_settings_field('rpw_resize', false, array($this, 'resize_field'), 'rpw_styles', 'rpw_settings');
 	
 	}
@@ -166,9 +170,17 @@ class RecentPostWidget {
 		
 	}
 	
+	function rpw_display_css($labels) {
+		
+		echo $labels[0].'</br>'.$labels[1].'</br>';
+		
+		a5_textarea('rpw_css', 'rpw_options[rpw_css]', @self::$options['rpw_css'], false, array('rows' => 10, 'cols' => 35));
+		
+	}
+	
 	function resize_field() {
 		
-		a5_resize_textarea(array('link', 'hover'), true);
+		a5_resize_textarea(array('link', 'hover', 'rpw_css'), true);
 		
 	}
 	
@@ -231,6 +243,7 @@ class RecentPostWidget {
 		
 		self::$options['link']=trim($input['link']);
 		self::$options['hover']=trim($input['hover']);
+		self::$options['rpw_css']=trim($input['rpw_css']);
 		
 		return self::$options;
 	

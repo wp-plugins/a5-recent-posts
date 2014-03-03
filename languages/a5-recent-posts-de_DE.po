@@ -1,60 +1,83 @@
-# Copyright (C) 2014 A5 Recent Post Widget
-# This file is distributed under the same license as the A5 Recent Post Widget package.
 msgid ""
 msgstr ""
-"Project-Id-Version: A5 Recent Post Widget 2.0\n"
+"Project-Id-Version: A5 Recent Post Widget\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/a5-recent-posts\n"
-"POT-Creation-Date: 2014-02-24 21:28:36+00:00\n"
+"POT-Creation-Date: 2014-03-03 22:23+0200\n"
+"PO-Revision-Date: 2014-03-03 22:24+0200\n"
+"Last-Translator: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
+"Language-Team: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-02-25 00:37+0200\n"
-"Last-Translator: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: de_DE\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: a5-recent-posts.php:118
+#: a5-recent-posts.php:120
 msgid "FAQ"
 msgstr "FAQ"
 
-#: a5-recent-posts.php:119
+#: a5-recent-posts.php:121
 msgid "Donate"
 msgstr "Spenden"
 
-#: a5-recent-posts.php:129 a5-recent-posts.php:200
+#: a5-recent-posts.php:131 a5-recent-posts.php:212
 #: class-lib/A5_OptionPageClass.php:31
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: a5-recent-posts.php:141
+#: a5-recent-posts.php:143
 msgid "Styling of the links"
 msgstr "Styling der Links"
 
-#: a5-recent-posts.php:143
+#: a5-recent-posts.php:145
 msgid "Link style:"
 msgstr "Link Stil:"
 
-#: a5-recent-posts.php:145
+#: a5-recent-posts.php:147
 msgid "Hover style:"
 msgstr "Hover Stil:"
 
-#: a5-recent-posts.php:153
+#: a5-recent-posts.php:149
+msgid "Widget container:"
+msgstr "Widget Container:"
+
+#: a5-recent-posts.php:149
+msgid ""
+"You can enter your own style for the widgets here. This will overwrite the "
+"styles of your theme."
+msgstr ""
+"Du kannst deinen eigenen Stil für die Widgets hier eingeben. Das wird die "
+"Stile deines Themes überschreiben."
+
+#: a5-recent-posts.php:149
+msgid ""
+"If you leave this empty, you can still style every instance of the widget "
+"individually."
+msgstr ""
+"Wenn du das Feld leer lässt, kannst du immer noch jede Instanz des Widgets "
+"individuell stylen."
+
+#: a5-recent-posts.php:157
 msgid "Just put some css code here."
 msgstr "Einfach CSS Code hier eingeben."
 
-#. Plugin URI of the plugin/theme
-#: a5-recent-posts.php:208
+#: a5-recent-posts.php:220
 msgid ""
 "http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget"
 msgstr "http://blog.atelier-fuenf.de/wordpress-plugins/recent-post-widget"
 
-#: a5-recent-posts.php:208
+#: a5-recent-posts.php:220
 msgid "Plugin Support"
 msgstr "Plugin Support"
 
-#: a5-recent-posts.php:210
+#: a5-recent-posts.php:222
 msgid ""
 "Style the links of the widget. If you leave this empty, your theme will "
 "style the hyperlinks."
@@ -62,15 +85,15 @@ msgstr ""
 "Style die Links im Widget. Wenn diese Felder leer bleiben, übernimmt das "
 "Theme das Styling der Hyperlinks."
 
-#: a5-recent-posts.php:211
+#: a5-recent-posts.php:223
 msgid "Just input something like,"
 msgstr "Einfach etwas wie"
 
-#: a5-recent-posts.php:216
+#: a5-recent-posts.php:228
 msgid "to get fat, blue, underlined links."
 msgstr "eingeben, um fette, blaue, unterstrichene Links zu bekommen."
 
-#: a5-recent-posts.php:217
+#: a5-recent-posts.php:229
 msgid ""
 "You most probably have to use &#34;!important&#34; at the end of each line, "
 "to make it work."
@@ -132,7 +155,7 @@ msgstr "Titel nicht anzeigen"
 
 #: class-lib/RPW_WidgetClass.php:97
 msgid "Under image"
-msgstr "Unter dem Artikelbild"
+msgstr "Unter dem Bild"
 
 #: class-lib/RPW_WidgetClass.php:97
 msgid "Left of image"
@@ -236,10 +259,12 @@ msgid "Check to open the link in another browser window."
 msgstr "Anklicken, um den Link in einem neuen Fenster zu öffnen."
 
 #: class-lib/RPW_WidgetClass.php:128
+#, php-format
 msgid "Check to %snot%s display the thumbnail of the post."
 msgstr "Anklicken, wenn %skein%s Thumbnail gewünscht wird."
 
 #: class-lib/RPW_WidgetClass.php:129
+#, php-format
 msgid ""
 "If wanting a border around the image, write the style here. %s would make it "
 "a black border, 1px wide."
@@ -299,6 +324,7 @@ msgstr ""
 "Auszugs anzuzeigen."
 
 #: class-lib/RPW_WidgetClass.php:137
+#, php-format
 msgid ""
 "Write here some text for the &#39;read more&#39; link. By default, it is %s:"
 msgstr ""
@@ -320,6 +346,7 @@ msgstr ""
 "der Homepage und in den Kategorien."
 
 #: class-lib/RPW_WidgetClass.php:140
+#, php-format
 msgid ""
 "Here you can finally style the widget. Simply type something like%sto get "
 "just a gray outline and a padding of 10 px. If you leave that section empty, "
@@ -329,24 +356,20 @@ msgstr ""
 "Außenlinie und einen inneren Abstand von 10 px zu erzeugen. Wenn dieses Feld "
 "leer bleibt, übernimmt dein Theme das Styling des Widgets."
 
-#. Plugin Name of the plugin/theme
-msgid "A5 Recent Post Widget"
-msgstr "A5 Recent Post Widget"
+#~ msgid "A5 Recent Post Widget"
+#~ msgstr "A5 Recent Post Widget"
 
-#. Description of the plugin/theme
-msgid ""
-"A5 Recent Posts Widget just displays the most recent post in a customizable "
-"widget. Set the colours of the links and border, show the widget on sites, "
-"that you define, ready."
-msgstr ""
-"Das A5 Recent Post Widget zeigt einfach den neuesten Artikel in einem "
-"flexiblen Widget. Bestimme die Farben der Links und der Rahmen, zeige das "
-"Widget auf den Seiten, die du definierst, fertig."
+#~ msgid ""
+#~ "A5 Recent Posts Widget just displays the most recent post in a "
+#~ "customizable widget. Set the colours of the links and border, show the "
+#~ "widget on sites, that you define, ready."
+#~ msgstr ""
+#~ "Das A5 Recent Post Widget zeigt einfach den neuesten Artikel in einem "
+#~ "flexiblen Widget. Bestimme die Farben der Links und der Rahmen, zeige das "
+#~ "Widget auf den Seiten, die du definierst, fertig."
 
-#. Author of the plugin/theme
-msgid "Waldemar Stoffel"
-msgstr "Waldemar Stoffel"
+#~ msgid "Waldemar Stoffel"
+#~ msgstr "Waldemar Stoffel"
 
-#. Author URI of the plugin/theme
-msgid "http://www.waldemarstoffel.com"
-msgstr "http://www.waldemarstoffel.com"
+#~ msgid "http://www.waldemarstoffel.com"
+#~ msgstr "http://www.waldemarstoffel.com"
