@@ -29,7 +29,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$defaults = array(
 			'title' => NULL,
 			'thumb' => false,
-			'width' => NULL,
+			'width' => get_option('thumbnail_size_w'),
 			'link' => NULL,
 			'target' => false,
 			'headline' => NULL,

@@ -3,7 +3,7 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.2
+Version: 2.3
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
@@ -59,8 +59,8 @@ class RecentPostWidget {
 		
 		if (isset(self::$options['tags'])) $this->update_plugin_options();
 		
-		register_activation_hook(  __FILE__, array(&$this, 'install') );
-		register_deactivation_hook(  __FILE__, array(&$this, 'uninstall') );
+		register_activation_hook(  __FILE__, array(&$this, '_install') );
+		register_deactivation_hook(  __FILE__, array(&$this, '_uninstall') );
 		
 		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 		add_filter('plugin_row_meta', array(&$this, 'register_links'), 10, 2);
@@ -108,11 +108,11 @@ class RecentPostWidget {
 	
 	// Creating default options on activation
 	
-	function install() {
+	function _install() {
 		
 		$default = array(
 			'cache' => array(),
-			'inline' => NULL
+			'inline' => false
 		);
 		
 		add_option('rpw_options', $default);
@@ -121,7 +121,7 @@ class RecentPostWidget {
 	
 	// Cleaning on deactivation
 	
-	function uninstall() {
+	function _uninstall() {
 		
 		delete_option('rpw_options');
 		
@@ -129,15 +129,15 @@ class RecentPostWidget {
 	
 	// updating options in case they are outdated
 	
-	function update_plugin_options() {	
+	function _update_plugin_options() {	
 		
-			self::$options['cache'] = array();
-			
-			self::$options['inline'] = NULL;
-			
-			unset(self::$options['tags'], self::$options['sizes']);
-			
-			update_option('rpw_options', self::$options);
+		self::$options['cache'] = array();
+		
+		self::$options['inline'] = false;
+		
+		unset(self::$options['tags'], self::$options['sizes']);
+		
+		update_option('rpw_options', self::$options);
 	
 	}
 

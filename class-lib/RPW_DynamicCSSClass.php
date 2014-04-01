@@ -16,7 +16,9 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 	
 	function __construct() {
 		
-		self::$options =  get_option('rpw_options');
+		self::$options =  get_option('rpw_options', array('cache' => array(), 'inline' => false));
+		
+		if (!array_key_exists('inline', self::$options)) self::$options['inline'] = false;
 		
 		parent::A5_DynamicFiles('wp', 'css', false, self::$options['inline']);
 		
