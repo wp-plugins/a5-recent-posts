@@ -12,6 +12,8 @@
 class A5_Recent_Post_Widget extends WP_Widget {
 	
 	const language_file = 'a5-recent-posts';
+	
+	private static $options;
  
 	function __construct() {
  
@@ -19,6 +21,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$control_opts = array( 'width' => 400 );
 		
 		parent::WP_Widget(false, $name = 'A5 Recents Post', $widget_opts, $control_opts);
+		
+		self::$options = get_option('rpw_options');
 	
 	}
 	
@@ -29,8 +33,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$defaults = array(
 			'title' => NULL,
 			'thumb' => false,
-			'image' => false,
-			'width' => NULL,
+			'width' => get_option('thumbnail_size_w'),
 			'link' => NULL,
 			'target' => false,
 			'headline' => NULL,
@@ -62,7 +65,6 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		
 		$title = esc_attr($instance['title']);
 		$thumb = esc_attr($instance['thumb']);
-		$image = esc_attr($instance['image']);
 		$width = esc_attr($instance['width']);
 		$link = esc_attr($instance['link']);
 		$target = esc_attr($instance['target']);
@@ -104,24 +106,23 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$base_name = 'widget-'.$this->id_base.'['.$this->number.']';
 		
 		$pages = array (
-				array($base_id.'homepage', $base_name.'[homepage]', $homepage, __('Homepage', self::language_file)),
-				array($base_id.'frontpage', $base_name.'[frontpage]', $frontpage, __('Frontpage (e.g. a static page as homepage)', self::language_file)),
-				array($base_id.'page', $base_name.'[page]', $page, __('&#34;Page&#34; pages', self::language_file)),
-				array($base_id.'category', $base_name.'[category]', $category, __('Category pages', self::language_file)),
-				array($base_id.'single', $base_name.'[single]', $single, __('Single post pages', self::language_file)),
-				array($base_id.'date', $base_name.'[date]', $date, __('Archive pages', self::language_file)),
-				array($base_id.'tag', $base_name.'[tag]', $tag, __('Tag pages', self::language_file)),
-				array($base_id.'attachment', $base_name.'[attachment]', $attachment, __('Attachments', self::language_file)),
-				array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
-				array($base_id.'author', $base_name.'[author]', $author, __('Author pages', self::language_file)),
-				array($base_id.'search', $base_name.'[search]', $search, __('Search Results', self::language_file)),
-				array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file))
+			array($base_id.'homepage', $base_name.'[homepage]', $homepage, __('Homepage', self::language_file)),
+			array($base_id.'frontpage', $base_name.'[frontpage]', $frontpage, __('Frontpage (e.g. a static page as homepage)', self::language_file)),
+			array($base_id.'page', $base_name.'[page]', $page, __('&#34;Page&#34; pages', self::language_file)),
+			array($base_id.'category', $base_name.'[category]', $category, __('Category pages', self::language_file)),
+			array($base_id.'single', $base_name.'[single]', $single, __('Single post pages', self::language_file)),
+			array($base_id.'date', $base_name.'[date]', $date, __('Archive pages', self::language_file)),
+			array($base_id.'tag', $base_name.'[tag]', $tag, __('Tag pages', self::language_file)),
+			array($base_id.'attachment', $base_name.'[attachment]', $attachment, __('Attachments', self::language_file)),
+			array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
+			array($base_id.'author', $base_name.'[author]', $author, __('Author pages', self::language_file)),
+			array($base_id.'search', $base_name.'[search]', $search, __('Search Results', self::language_file)),
+			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file))
 		);
 		
 		$checkall = array($base_id.'checkall', $base_name.'[checkall]', __('Check all', self::language_file));
 		
 		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', self::language_file), array('space' => true, 'class' => 'widefat'));
-		a5_checkbox($base_id.'image', $base_name.'[image]', $image, __('Check to get the first image of the post as thumbnail.', self::language_file), array('space' => true));
 		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
 		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', self::language_file), false, array('space' => true));
 		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', self::language_file), array('space' => true));
@@ -137,7 +138,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		a5_text_field($base_id.'rmtext', $base_name.'[rmtext]', $rmtext, sprintf(__('Write here some text for the &#39;read more&#39; link. By default, it is %s:', self::language_file), '[&#8230;]'), array('space' => true, 'class' => 'widefat'));
 		a5_text_field($base_id.'rmclass', $base_name.'[rmclass]', $rmclass, __('If you want to style the &#39;read more&#39; link, you can enter a class here.', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_checkgroup(false, false, $pages, __('Check, where you want to show the widget. By default, it is showing on the homepage and the category pages:', self::language_file), $checkall);
-		a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
+		if(empty(self::$options['rpw_css'])) a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
 		a5_resize_textarea(array($base_id.'style'), true);
 	
 	} // form
@@ -148,7 +149,6 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		
 		$instance['title'] = strip_tags($new_instance['title']); 
 		$instance['thumb'] = strip_tags($new_instance['thumb']);	 
-		$instance['image'] = strip_tags($new_instance['image']);	 
 		$instance['width'] = strip_tags($new_instance['width']);
 		$instance['link'] = strip_tags($new_instance['link']);
 		$instance['target'] = strip_tags($new_instance['target']);
@@ -206,17 +206,11 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 			$title = apply_filters('widget_title', $instance['title']);
 			
-			if (empty($instance['style'])) :
-			
-				$rpw_before_widget=$before_widget;
-				$rpw_after_widget=$after_widget;
-			
-			else :
+			if (!empty($instance['style'])) :
 			
 				$style=str_replace(array("\r\n", "\n", "\r"), ' ', $instance['style']);
 				
-				$rpw_before_widget='<div id="'.$widget_id.'" style="'.$style.'" class="widget_a5_recent_post_widget">';
-				$rpw_after_widget='</div>';
+				$before_widget = str_replace('>', 'style="'.$style.'">', $before_widget);
 			
 			endif;
 			
@@ -224,7 +218,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 			// widget starts
 			
-			echo $rpw_before_widget.$eol;
+			echo $before_widget.$eol;
 			
 			if ( $title ) echo $before_title . $title . $after_title . $eol;
 			
@@ -269,7 +263,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 					
 						$args = array(
 							'post_type' => 'attachment',
-							'numberposts' => 1,
+							'posts_per_page' => 1,
 							'post_status' => null,
 							'post_parent' => $post->ID
 						);
@@ -296,120 +290,67 @@ class A5_Recent_Post_Widget extends WP_Widget {
 					
 					endswitch;
 					
-					$rpw_tags = A5_Image::tags($post, 'rpw_options', self::language_file);
-					
-					$rpw_image_alt = $rpw_tags['image_alt'];
-					$rpw_image_title = $rpw_tags['image_title'];
-					$rpw_title_tag = $rpw_tags['title_tag'];
-					
-					$rpw_style = ($instance['alignment'] != 'notext' && $instance['alignment'] != 'none') ? ' style="text-align: '.$instance['alignment'].';"' : '';
-					
-					// headline, if wanted
-					
-					if ($instance['headline'] != 'none') :
-					
-						$rpw_link_tag = ($rpw_link) ? $eol.'<a href="'.$rpw_link.'" title="'.$rpw_title_tag.'"'.$rpw_target.'>'.get_the_title().'</a>'.$eol : $eol.get_the_title().$eol;
-					
-						$rpw_headline = '<h'.$instance['h'].$rpw_style.'>'.$rpw_link_tag.'</h'.$instance['h'].'>';
-						
-					endif;
-					
-					// date, if wanted
-					
-					if ($instance['show_date'] != 'none') $post_date = $eol.'<p'.$rpw_style.'>'.get_the_date().'</p>';
+				$rpw_tags = A5_Image::tags(self::language_file);
 				
-					// thumbnail, if wanted
+				$rpw_image_alt = $rpw_tags['image_alt'];
+				$rpw_image_title = $rpw_tags['image_title'];
+				$rpw_title_tag = $rpw_tags['title_tag'];
 				
-					if (!$instance['thumb']) :
-					
-						$rpw_imgborder = (isset($instance['imgborder'])) ? ' border: '.$instance['imgborder'].';' : '';
-					
-						$default = A5_Image::get_default($instance['width']);
-						
-						$rpw_float = ($instance['alignment'] != 'notext') ? $instance['alignment'] : 'none';
+				$rpw_style = ($instance['alignment'] != 'notext' && $instance['alignment'] != 'none') ? ' style="text-align: '.$instance['alignment'].';"' : '';
 				
-						$rpw_margin = '';
+				// headline, if wanted
+				
+				if ($instance['headline'] != 'none') :
+				
+					$rpw_link_tag = ($rpw_link) ? $eol.'<a href="'.$rpw_link.'" title="'.$rpw_title_tag.'"'.$rpw_target.'>'.get_the_title().'</a>'.$eol : $eol.get_the_title().$eol;
+				
+					$rpw_headline = '<h'.$instance['h'].$rpw_style.'>'.$rpw_link_tag.'</h'.$instance['h'].'>';
+					
+				endif;
+				
+				// date, if wanted
+				
+				if ($instance['show_date'] != 'none') $post_date = $eol.'<p'.$rpw_style.'>'.get_the_date().'</p>';
+			
+				// thumbnail, if wanted
+			
+				if (!$instance['thumb']) :
+				
+					$rpw_imgborder = (!empty($instance['imgborder'])) ? ' border: '.$instance['imgborder'].';' : '';
+					
+					$rpw_float = ($instance['alignment'] != 'notext') ? $instance['alignment'] : 'none';
+					
+					$rpw_margin = '';
 						if ($instance['alignment'] == 'left') $rpw_margin = ' margin-right: 1em;';
 						if ($instance['alignment'] == 'right') $rpw_margin = ' margin-left: 1em;';
-						
-						if (!has_post_thumbnail() || $instance['image']) : 
-						
-							$args = array (
-								'content' => $post->post_content,
-								'width' => $default[0],
-								'height' => $default[1], 
-								'option' => 'rpw_options'
-							);	
-						   
-							$rpw_image_info = A5_Image::thumbnail($args);
-							
-							$rpw_thumb = $rpw_image_info['thumb'];
-							
-							$rpw_width = $rpw_image_info['thumb_width'];
+				
+					$id = get_the_ID();
 					
-							$rpw_height = $rpw_image_info['thumb_height'];
-							
-							if ($rpw_thumb) :
-							
-								if ($rpw_width) $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" width="'.$rpw_width.'" height="'.$rpw_height.'" style="float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
-									
-								else $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" style="maxwidth: '.$width.'; maxheight: '.$height.'; float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
-								
-							endif;
-							
-						else :
+					$args = array (
+						'id' => $id,
+						'option' => 'rpw_options',
+						'width' => $instance['width']
+					);
+					   
+					$rpw_image_info = A5_Image::thumbnail($args);
 						
-							$img_info = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large');
-							
-							if (!$img_info):
-							
-								$src = get_the_post_thumbnail();
-								
-								$img = preg_match_all('/<\s*img[^>]+src\s*=\s*["\']?([^\s"\']+)["\']?[\s\/>]+/', $src, $matches);
-								
-								if ($img): 
-								
-									$img_info[0] = $matches[1][0];
-									
-									$img_size = A5_Image::get_size($img_info[0]);
-									
-									$img_info[1] = $img_size['width'];
-									
-									$img_info[2] = $img_size['height'];
-									
-								endif;
-								
-							endif;
-						
-						if ($img_info) :
-						
-							$args = array (
-								'ratio' => $img_info[1]/$img_info[2],
-								'thumb_width' => $img_info[1],
-								'thumb_height' => $img_info[2],
-								'width' => $default[0],
-								'height' => $default[1]
-							);
-							
-							$img_size = A5_Image::count_size($args);
-							
-							$atts = array('title' => $rpw_image_title, 'alt' => $rpw_image_alt, 'style' => $rpw_imgborder);
-							
-							$size = array($img_size['width'], $img_size['height']);
-						
-							$rpw_img_tag = get_the_post_thumbnail($post->ID, $size, $atts);
-							
-						endif;
-						
-					endif;
+					$rpw_thumb = $rpw_image_info[0];
 					
-					if (!empty($rpw_img_tag)) :
+					$rpw_width = $rpw_image_info[1];
+			
+					$rpw_height = ($rpw_image_info[2]) ? ' height="'.$rpw_image_info[2].'" ': '';
+				
+					if ($rpw_thumb)  $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" width="'.$rpw_width.'"'.$rpw_height.'style="float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
 					
-						$rpw_image = ($rpw_link) ? '<a href="'.$rpw_link.'">'.$rpw_img_tag.'</a>'.$eol : $rpw_img_tag.$eol;
-						
-						$rpw_image .= '<div style="clear: both;"></div>'.$eol;
-						
-					endif;
+				endif;
+				
+				$rpw_image = '';
+				
+				if (!empty($rpw_img_tag)) :
+				
+					$rpw_image = ($rpw_link) ? '<a href="'.$rpw_link.'">'.$rpw_img_tag.'</a>'.$eol : $rpw_img_tag.$eol;
+					
+					$rpw_image .= '<div style="clear: both;"></div>'.$eol;
 					
 				endif;
 				
@@ -419,7 +360,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 				
 					$rmtext = ($instance['rmtext']) ? $instance['rmtext'] : '[&#8230;]';
 					
-					$shortcode = ($instance['noshorts']) ? false : 1;
+					$shortcode = ($instance['noshorts']) ? false : true;
 					
 					$filter = ($instance['filter']) ? false : true;
 				
@@ -471,7 +412,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			wp_reset_query();
 			wp_reset_postdata();
 			
-			echo $rpw_after_widget;
+			echo $after_widget;
 		
 		else:
 		
