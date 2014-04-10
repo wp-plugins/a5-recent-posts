@@ -162,11 +162,11 @@ class A5_DynamicFiles {
 	
 		$eol = "\r\n";
 		
-		$css_text = '@charset "UTF-8";'.$eol.'/* CSS Document createtd by the A5 Plugin Framework */'.$eol;
+		$js_text = '// JavaScript Document createtd by the A5 Plugin Framework'.$eol;
 		
-		$css_text .= self::$styles;
+		$js_text .= self::$scripts;
 		
-		echo $css_text;	
+		echo $js_text;	
 		
 	}
 	

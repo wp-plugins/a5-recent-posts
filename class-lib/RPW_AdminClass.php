@@ -101,6 +101,12 @@ class RPW_Admin extends A5_OptionPage {
 		
 		add_settings_field('rpw_inline', __('Debug:', self::language_file), array(&$this, 'inline_field'), 'rpw_styles', 'rpw_settings', array(__('If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay the styles inline. By clicking here you can do so.', self::language_file)));
 		
+		$cachesize = count(self::$options['cache']);
+		
+		$entry = ($cachesize > 1) ? __('entries', self::language_file) : __('entry', self::language_file);
+		
+		if ($cachesize > 0) add_settings_field('rpw_reset', sprintf(__('Empty cache (%d %s):', self::language_file), count(self::$options['cache']), $entry), array(&$this, 'reset_field'), 'rpw_styles', 'rpw_settings', array(__('You can empty the plugin&#39;s cache here, if necessary.', self::language_file)));
+		
 		add_settings_field('rpw_resize', false, array(&$this, 'resize_field'), 'rpw_styles', 'rpw_settings');
 	
 	}
@@ -137,6 +143,12 @@ class RPW_Admin extends A5_OptionPage {
 		
 	}
 	
+	function reset_field($labels) {
+		
+		a5_checkbox('reset_options', 'rpw_options[reset_options]', @self::$options['reset_options'], $labels[0]);
+		
+	}
+	
 	function resize_field() {
 		
 		a5_resize_textarea(array('link', 'hover', 'rpw_css'), true);
@@ -149,6 +161,14 @@ class RPW_Admin extends A5_OptionPage {
 		self::$options['hover']=trim($input['hover']);
 		self::$options['rpw_css']=trim($input['rpw_css']);
 		self::$options['inline'] = isset($input['inline']) ? true : false;
+		
+		if (isset($input['reset_options'])) :
+		
+			self::$options['cache'] = array();
+			
+			add_settings_error('rpw_options', 'empty-cache', __('Cache emptied.', self::language_file), 'updated');
+			
+		endif;
 		
 		return self::$options;
 	

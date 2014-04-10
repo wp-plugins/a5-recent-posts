@@ -12,6 +12,8 @@
 class A5_Recent_Post_Widget extends WP_Widget {
 	
 	const language_file = 'a5-recent-posts';
+	
+	private static $options;
  
 	function __construct() {
  
@@ -19,6 +21,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$control_opts = array( 'width' => 400 );
 		
 		parent::WP_Widget(false, $name = 'A5 Recents Post', $widget_opts, $control_opts);
+		
+		self::$options = get_option('rpw_options');
 	
 	}
 	
@@ -134,7 +138,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		a5_text_field($base_id.'rmtext', $base_name.'[rmtext]', $rmtext, sprintf(__('Write here some text for the &#39;read more&#39; link. By default, it is %s:', self::language_file), '[&#8230;]'), array('space' => true, 'class' => 'widefat'));
 		a5_text_field($base_id.'rmclass', $base_name.'[rmclass]', $rmclass, __('If you want to style the &#39;read more&#39; link, you can enter a class here.', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_checkgroup(false, false, $pages, __('Check, where you want to show the widget. By default, it is showing on the homepage and the category pages:', self::language_file), $checkall);
-		a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
+		if(empty(self::$options['rpw_css'])) a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
 		a5_resize_textarea(array($base_id.'style'), true);
 	
 	} // form
@@ -202,7 +206,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 			$title = apply_filters('widget_title', $instance['title']);
 			
-			if (empty($instance['style'])) :
+			if (!empty($instance['style'])) :
 			
 				$style=str_replace(array("\r\n", "\n", "\r"), ' ', $instance['style']);
 				
@@ -312,6 +316,14 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 				if (!$instance['thumb']) :
 				
+					$rpw_imgborder = (!empty($instance['imgborder'])) ? ' border: '.$instance['imgborder'].';' : '';
+					
+					$rpw_float = ($instance['alignment'] != 'notext') ? $instance['alignment'] : 'none';
+					
+					$rpw_margin = '';
+						if ($instance['alignment'] == 'left') $rpw_margin = ' margin-right: 1em;';
+						if ($instance['alignment'] == 'right') $rpw_margin = ' margin-left: 1em;';
+				
 					$id = get_the_ID();
 					
 					$args = array (
@@ -326,23 +338,9 @@ class A5_Recent_Post_Widget extends WP_Widget {
 					
 					$rpw_width = $rpw_image_info[1];
 			
-					$rpw_height = $rpw_image_info[2];
+					$rpw_height = ($rpw_image_info[2]) ? ' height="'.$rpw_image_info[2].'" ': '';
 				
-					if ($rpw_thumb) :
-				
-						$rpw_imgborder = (isset($instance['imgborder'])) ? ' border: '.$instance['imgborder'].';' : '';
-					
-						$rpw_float = ($instance['alignment'] != 'notext') ? $instance['alignment'] : 'none';
-				
-						$rpw_margin = '';
-						if ($instance['alignment'] == 'left') $rpw_margin = ' margin-right: 1em;';
-						if ($instance['alignment'] == 'right') $rpw_margin = ' margin-left: 1em;';	
-					
-						if ($rpw_width) $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" width="'.$rpw_width.'" height="'.$rpw_height.'" style="float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
-							
-						else $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" style="maxwidth: '.$width.'; maxheight: '.$height.'; float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
-						
-					endif;
+					if ($rpw_thumb)  $rpw_img_tag = '<img title="'.$rpw_image_title.'" src="'.$rpw_thumb.'" alt="'.$rpw_image_alt.'" class="wp-post-image" width="'.$rpw_width.'"'.$rpw_height.'style="float: '.$rpw_float.';'.$rpw_margin.$rpw_imgborder.'" />';
 					
 				endif;
 				
@@ -362,7 +360,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 				
 					$rmtext = ($instance['rmtext']) ? $instance['rmtext'] : '[&#8230;]';
 					
-					$shortcode = ($instance['noshorts']) ? false : 1;
+					$shortcode = ($instance['noshorts']) ? false : true;
 					
 					$filter = ($instance['filter']) ? false : true;
 				

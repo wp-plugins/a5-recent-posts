@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: sidebar, widget, post, newspaper, recent post, feature, spotlight, flexible
 Requires at least: 2.7
 Tested up to: 3.9
-Stable tag: 2.3
+Stable tag: 2.4
 
 With the A5 Recent Post Widget you can put your latest post in the focus and style it differently.
 
@@ -68,6 +68,10 @@ Since the stylesheet of the theme will have highest priority, you will have to m
 
 == Changelog ==
 
+= 2.4 =
+
+* All 'Devided by Zero' errors should be eliminated
+
 = 2.3 =
 
 * Some Finetuning of the framework; more foolproof
@@ -109,3 +113,7 @@ Framework adjusted, better recognition of images
 = 2.3 =
 
 Some Finetuning of the framework; more foolproof
+
+= 2.4 =
+
+All 'Devided by Zero' errors should be eliminated
