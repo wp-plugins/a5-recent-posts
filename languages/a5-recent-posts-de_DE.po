@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: A5 Recent Post Widget\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/a5-recent-posts\n"
-"POT-Creation-Date: 2014-04-10 12:13+0200\n"
-"PO-Revision-Date: 2014-04-10 12:14+0200\n"
+"POT-Creation-Date: 2014-04-22 09:06+0200\n"
+"PO-Revision-Date: 2014-04-22 09:07+0200\n"
 "Last-Translator: Waldemar Stoffel <stoffel@atelier-fuenf.de>\n"
 "Language-Team: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
 "Language: de_DE\n"
@@ -28,7 +28,7 @@ msgid "Donate"
 msgstr "Spenden"
 
 #: a5-recent-posts.php:103 class-lib/A5_OptionPageClass.php:31
-#: class-lib/RPW_AdminClass.php:34
+#: class-lib/RPW_AdminClass.php:48
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -40,16 +40,16 @@ msgstr "Link zu:"
 msgid "Click to toggle"
 msgstr "Zum Umschalten klicken"
 
-#: class-lib/RPW_AdminClass.php:45
+#: class-lib/RPW_AdminClass.php:59
 msgid ""
 "http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget"
 msgstr "http://blog.atelier-fuenf.de/wordpress-plugins/recent-post-widget"
 
-#: class-lib/RPW_AdminClass.php:45
+#: class-lib/RPW_AdminClass.php:59
 msgid "Plugin Support"
 msgstr "Plugin Support"
 
-#: class-lib/RPW_AdminClass.php:47
+#: class-lib/RPW_AdminClass.php:61
 msgid ""
 "Style the links of the widget. If you leave this empty, your theme will "
 "style the hyperlinks."
@@ -57,15 +57,15 @@ msgstr ""
 "Style die Links im Widget. Wenn diese Felder leer bleiben, übernimmt das "
 "Theme das Styling der Hyperlinks."
 
-#: class-lib/RPW_AdminClass.php:48
+#: class-lib/RPW_AdminClass.php:62
 msgid "Just input something like,"
 msgstr "Einfach etwas wie"
 
-#: class-lib/RPW_AdminClass.php:53
+#: class-lib/RPW_AdminClass.php:67
 msgid "to get fat, blue, underlined links."
 msgstr "eingeben, um fette, blaue, unterstrichene Links zu bekommen."
 
-#: class-lib/RPW_AdminClass.php:54
+#: class-lib/RPW_AdminClass.php:68
 msgid ""
 "You most probably have to use &#34;!important&#34; at the end of each line, "
 "to make it work."
@@ -73,27 +73,27 @@ msgstr ""
 "Höchstwahrscheinlich musst du &#34;!important&#34; am Ende jeder Zeile "
 "eingeben, um die Styles zu übernehmen."
 
-#: class-lib/RPW_AdminClass.php:67
+#: class-lib/RPW_AdminClass.php:81
 msgid "Debug Info"
 msgstr "Info zur Fehlersuche"
 
-#: class-lib/RPW_AdminClass.php:94
+#: class-lib/RPW_AdminClass.php:108
 msgid "Styling of the links"
 msgstr "Styling der Links"
 
-#: class-lib/RPW_AdminClass.php:96
+#: class-lib/RPW_AdminClass.php:110
 msgid "Link style:"
 msgstr "Link Stil:"
 
-#: class-lib/RPW_AdminClass.php:98
+#: class-lib/RPW_AdminClass.php:112
 msgid "Hover style:"
 msgstr "Hover Stil:"
 
-#: class-lib/RPW_AdminClass.php:100
+#: class-lib/RPW_AdminClass.php:114
 msgid "Widget container:"
 msgstr "Widget Container:"
 
-#: class-lib/RPW_AdminClass.php:100
+#: class-lib/RPW_AdminClass.php:114
 msgid ""
 "You can enter your own style for the widgets here. This will overwrite the "
 "styles of your theme."
@@ -101,7 +101,7 @@ msgstr ""
 "Du kannst deinen eigenen Stil für die Widgets hier eingeben. Das wird die "
 "Stile deines Themes überschreiben."
 
-#: class-lib/RPW_AdminClass.php:100
+#: class-lib/RPW_AdminClass.php:114
 msgid ""
 "If you leave this empty, you can still style every instance of the widget "
 "individually."
@@ -109,11 +109,19 @@ msgstr ""
 "Wenn du das Feld leer lässt, kannst du immer noch jede Instanz des Widgets "
 "individuell stylen."
 
-#: class-lib/RPW_AdminClass.php:102
+#: class-lib/RPW_AdminClass.php:116
+msgid "Compress Style Sheet:"
+msgstr "Stylesheet Komprimieren:"
+
+#: class-lib/RPW_AdminClass.php:116
+msgid "Click here to compress the style sheet."
+msgstr "Anklicken, um das Stylesheet zu komprimieren."
+
+#: class-lib/RPW_AdminClass.php:118
 msgid "Debug:"
 msgstr "Debug"
 
-#: class-lib/RPW_AdminClass.php:102
+#: class-lib/RPW_AdminClass.php:118
 msgid ""
 "If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay "
 "the styles inline. By clicking here you can do so."
@@ -122,28 +130,28 @@ msgstr ""
 "Ablegen des CSS im Quellcode hilft dann. Hier klicken, um CSS inline zu "
 "schreiben."
 
-#: class-lib/RPW_AdminClass.php:106
+#: class-lib/RPW_AdminClass.php:122
 msgid "entries"
 msgstr "Einträge"
 
-#: class-lib/RPW_AdminClass.php:106
+#: class-lib/RPW_AdminClass.php:122
 msgid "entry"
 msgstr "Eintrag"
 
-#: class-lib/RPW_AdminClass.php:108
+#: class-lib/RPW_AdminClass.php:124
 #, php-format
 msgid "Empty cache (%d %s):"
 msgstr "Cache leeren (%d %s):"
 
-#: class-lib/RPW_AdminClass.php:108
+#: class-lib/RPW_AdminClass.php:124
 msgid "You can empty the plugin&#39;s cache here, if necessary."
 msgstr "Falls nötig, kannst du hier den Cache des Plugins leeren."
 
-#: class-lib/RPW_AdminClass.php:116
+#: class-lib/RPW_AdminClass.php:132
 msgid "Just put some css code here."
 msgstr "Einfach CSS Code hier eingeben."
 
-#: class-lib/RPW_AdminClass.php:169
+#: class-lib/RPW_AdminClass.php:192
 msgid "Cache emptied."
 msgstr "Cache geleert."
 
