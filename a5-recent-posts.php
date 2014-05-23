@@ -79,7 +79,7 @@ class RecentPostWidget {
 	
 	function enqueue_scripts($hook) {
 		
-		if ($hook != 'widgets.php' && $hook != 'settings_page_a5-recent-posts-settings') return;
+		if ($hook != 'post.php' && $hook != 'widgets.php' && $hook != 'settings_page_a5-recent-posts-settings') return;
 		
 		wp_register_script('ta-expander-script', plugins_url('ta-expander.js', __FILE__), array('jquery'), '3.0', true);
 		wp_enqueue_script('ta-expander-script');
