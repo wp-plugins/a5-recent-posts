@@ -145,16 +145,28 @@ class A5_Image {
 
 		endif;
 		
+		if (!is_single()) : 
+		
+			global $more;
+			
+			$more_old = $more;
+			
+			$more = 1;
+			
+		endif;
+		
 		$content = get_the_content();
 		
 		$check = do_shortcode($content);
 		
+		if (!is_single()) $more = $more_old;
+		
 		$image = preg_match_all('#(?:<a[^>]+?href=["|\'](?P<link_url>[^\s]+?)["|\'][^>]*?>\s*)?(?P<img_tag><img[^>]+?src=["|\'](?P<img_url>[^\s]+?)["|\'].*?>){1}(?:\s*</a>)?#is', $check, $matches);
 		
 		if (0 == $image && !isset($attachment_id)) return false;
-	
-		if (!isset($attachment_id) || isset($number)):
-			
+		
+		if (isset($number) || !isset($attachment_id)):
+		
 			$number = (isset($number)) ? $number : 1;
 			
 			if ($number == 'last' || $number > count($matches ['img_url'])) $number = count($matches ['img_url']);
