@@ -17,7 +17,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
  
 	function __construct() {
  
-		$widget_opts = array( 'description' => __('You can display the most recent post in this widget. Define, on what pages the widget will show.', self::language_file) );
+		$widget_opts = array( 'description' => __('You can display the most recent post(s) in this widget. Define, on what pages the widget will show.', self::language_file) );
 		$control_opts = array( 'width' => 400 );
 		
 		parent::WP_Widget(false, $name = 'A5 Recents Post', $widget_opts, $control_opts);
@@ -28,7 +28,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 	
 	function form($instance) {
 	
-		// setup some default settings
+		// setup the default settings
 		
 		$defaults = array(
 			'title' => NULL,
@@ -58,7 +58,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			'show_date' => NULL,
 			'h' => 3,
 			'alignment' => NULL,
-			'imgborder' => NULL
+			'imgborder' => NULL,
+			'posts_per_page' => 1
 		);
 		
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -91,6 +92,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$h=esc_attr($instance['h']);
 		$alignment=esc_attr($instance['alignment']);
 		$imgborder = esc_attr($instance['imgborder']);
+		$posts_per_page = esc_attr($instance['posts_per_page']);
 		
 		$link_options = array (array('post', __('The post', self::language_file)), array('extern', __('External link', self::language_file)), array('page', __('The attachment page', self::language_file)), array('file', __('The attachment file', self::language_file)), array('none', __('Don&#39;t link', self::language_file)));
 		
@@ -123,6 +125,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$checkall = array($base_id.'checkall', $base_name.'[checkall]', __('Check all', self::language_file));
 		
 		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', self::language_file), array('space' => true, 'class' => 'widefat'));
+		a5_number_field($base_id.'posts_per_page', $base_name.'[posts_per_page]', $posts_per_page, __('How many posts should be displayed in the widget', self::language_file), array('space' => true, 'size' => 4, 'step' => 1, 'min' => 1));
 		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
 		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', self::language_file), false, array('space' => true));
 		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', self::language_file), array('space' => true));
@@ -138,7 +141,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		a5_text_field($base_id.'rmtext', $base_name.'[rmtext]', $rmtext, sprintf(__('Write here some text for the &#39;read more&#39; link. By default, it is %s:', self::language_file), '[&#8230;]'), array('space' => true, 'class' => 'widefat'));
 		a5_text_field($base_id.'rmclass', $base_name.'[rmclass]', $rmclass, __('If you want to style the &#39;read more&#39; link, you can enter a class here.', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_checkgroup(false, false, $pages, __('Check, where you want to show the widget. By default, it is showing on the homepage and the category pages:', self::language_file), $checkall);
-		if(empty(self::$options['rpw_css'])) a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
+		if(empty(self::$options['css'])) a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
 		a5_resize_textarea(array($base_id.'style'), true);
 	
 	} // form
@@ -175,6 +178,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['h'] = strip_tags($new_instance['h']);
 		$instance['alignment'] = strip_tags($new_instance['alignment']);
 		$instance['imgborder'] = strip_tags($new_instance['imgborder']);
+		$instance['posts_per_page'] = strip_tags($new_instance['posts_per_page']);
 		
 		return $instance;
 	
@@ -189,7 +193,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		if (is_page()) $rpw_pagetype='page';
 		if (is_category()) $rpw_pagetype='category';
 		if (is_single()) $rpw_pagetype='single';
-		if (is_date()) $rpw_pagetype='date';
+		if (is_date() || is_archive()) $rpw_pagetype='date';
 		if (is_tag()) $rpw_pagetype='tag';
 		if (is_attachment()) $rpw_pagetype='attachment';
 		if (is_tax()) $rpw_pagetype='taxonomy';
@@ -228,7 +232,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 			global $wp_query, $post;
 			
-			$rpw_args['posts_per_page'] = 1;
+			$rpw_args['posts_per_page'] = $instance['posts_per_page'];
 			
 			if (is_single()) $rpw_args['post__not_in'] = array($wp_query->get_queried_object_id());
 			
