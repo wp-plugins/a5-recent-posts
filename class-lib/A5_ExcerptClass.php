@@ -10,8 +10,8 @@
  * Gets the excerpt of a post according to some parameters
  *
  * standard parameters: offset(=0), usertext, excerpt, count
- * additional parameters: class(classname), filter(boolean), shortcode(boolean), format(boolean), readmore_link(boolean),
- * readmore_text(string)
+ * additional parameters: class(classname), filter(boolean), shortcode(boolean), format(boolean), readmore(boolean),
+ * rmtext(string)
  *
  */
 

@@ -65,7 +65,7 @@ class RPW_Admin extends A5_OptionPage {
 		text-decoration: underline;    
 		</strong></p>
 		<?php _e('to get fat, blue, underlined links.', self::language_file); ?></p>
-		<p><strong><?php _e('You most probably have to use &#34;!important&#34; at the end of each line, to make it work.', self::language_file); ?></strong></p>
+		<p><strong><?php _e('You most probably have to use &#39;!important&#39; at the end of each line, to make it work.', self::language_file); ?></strong></p>
 		<?php
 		
 		parent::open_form('options.php');
@@ -115,7 +115,9 @@ class RPW_Admin extends A5_OptionPage {
 		
 		add_settings_field('rpw_compress', __('Compress Style Sheet:', self::language_file), array(&$this, 'compress_field'), 'rpw_styles', 'rpw_settings', array(__('Click here to compress the style sheet.', self::language_file)));
 		
-		add_settings_field('rpw_inline', __('Debug:', self::language_file), array(&$this, 'inline_field'), 'rpw_styles', 'rpw_settings', array(__('If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay the styles inline. By clicking here you can do so.', self::language_file)));
+		add_settings_field('rpw_inline', __('Debug:', self::language_file), array(&$this, 'inline_field'), 'rpw_styles', 'rpw_settings', array(__('If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay the styles inline. By clicking here you can do so. (It might be also much faster in some environments).', self::language_file)));
+		
+		if (self::$options['inline']) add_settings_field('rpw_priority', __('Priority of the inline style:', self::language_file), array(&$this, 'priority_field'), 'rpw_styles', 'rpw_settings', array(__('This only affects inline styles. Some other plugins could be using the same selectors as this one. In that case, writing your&#39;s later in the code might help.', self::language_file)));
 		
 		$cachesize = count(self::$options['cache']);
 		
@@ -149,7 +151,7 @@ class RPW_Admin extends A5_OptionPage {
 		
 		echo $labels[0].'</br>'.$labels[1].'</br>';
 		
-		a5_textarea('rpw_css', 'rpw_options[rpw_css]', @self::$options['rpw_css'], false, array('rows' => 7, 'cols' => 35));
+		a5_textarea('css', 'rpw_options[css]', @self::$options['css'], false, array('rows' => 7, 'cols' => 35));
 		
 	}
 	
@@ -162,6 +164,14 @@ class RPW_Admin extends A5_OptionPage {
 	function inline_field($labels) {
 		
 		a5_checkbox('inline', 'rpw_options[inline]', @self::$options['inline'], $labels[0]);
+		
+	}
+	
+	function priority_field($labels) {
+		
+		echo $labels[0].'<br />';
+		
+		a5_number_field('priority', 'rpw_options[priority]', @self::$options['priority'], false, array('step' => 10));
 		
 	}
 	
@@ -181,9 +191,10 @@ class RPW_Admin extends A5_OptionPage {
 		
 		self::$options['link']=trim($input['link']);
 		self::$options['hover']=trim($input['hover']);
-		self::$options['rpw_css']=trim($input['rpw_css']);
+		self::$options['css']=trim($input['css']);
 		self::$options['compress'] = isset($input['compress']) ? true : false;
 		self::$options['inline'] = isset($input['inline']) ? true : false;
+		self::$options['priority'] = isset($input['priority']) ? trim($input['priority']) : false;
 		
 		if (isset($input['reset_options'])) :
 		
