@@ -6,7 +6,7 @@
  *
  * Extending A5 Dynamic Files
  *
- * Presses the dynamical CSS A5 Recent Post Widget into a virtual style sheet
+ * Presses the dynamical CSS for the A5 Recent Post Widget into a virtual style sheet
  *
  */
 
@@ -20,9 +20,11 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		
 		if (!array_key_exists('inline', self::$options)) self::$options['inline'] = false;
 		
+		if (!array_key_exists('priority', self::$options)) self::$options['priority'] = false;
+		
 		if (!array_key_exists('compress', self::$options)) self::$options['compress'] = false;
 		
-		parent::A5_DynamicFiles('wp', 'css', false, self::$options['inline']);
+		parent::A5_DynamicFiles('wp', 'css', 'all', false, self::$options['inline'], self::$options['priority']);
 		
 		$eol = (self::$options['compress']) ? '' : "\r\n";
 		$tab = (self::$options['compress']) ? ' ' : "\t";
@@ -31,13 +33,15 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		
 		parent::$wp_styles .= (!self::$options['compress']) ? $eol.'/* CSS portion of the A5 Recent Post Widget */'.$eol.$eol : '';
 		
-		$style = '-moz-hyphens: auto;'.$eol.$tab.'-o-hyphens: auto;'.$eol.$tab.'-webkit-hyphens: auto;'.$eol.$tab.'-ms-hyphens: auto;'.$eol.$tab.'hyphens: auto;';
+		if (!empty(self::$options['css'])) :
 		
-		if (!empty(self::$options['rpw_css'])) $style.=$eol.$tab.str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['rpw_css']));
-		
-			parent::$wp_styles.='div'.$css_selector.','.$eol.'li'.$css_selector.','.$eol.'aside'.$css_selector.' {'.$eol.$tab.$style.$eol.'}'.$eol;
+			$style = str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['css']));
 			
-			parent::$wp_styles.='div'.$css_selector.' img,'.$eol.'li'.$css_selector.' img,'.$eol.'aside'.$css_selector.' img {'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
+			parent::$wp_styles .= 'div'.$css_selector.','.$eol.'li'.$css_selector.','.$eol.'aside'.$css_selector.' {'.$eol.$tab.$style.$eol.'}'.$eol;
+			
+		endif;
+			
+		parent::$wp_styles.='div'.$css_selector.' img,'.$eol.'li'.$css_selector.' img,'.$eol.'aside'.$css_selector.' img {'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
 		
 		if (!empty (self::$options['link'])) :
 		

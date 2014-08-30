@@ -3,7 +3,7 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.4.3
+Version: 2.5.1
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
@@ -49,15 +49,11 @@ if (!class_exists('A5_Recent_Post_Widget')) require_once RPW_PATH.'class-lib/RPW
 
 class RecentPostWidget {
 
-	const language_file = 'a5-recent-posts';
+	const language_file = 'a5-recent-posts', version = 2.5;
 	
 	private static $options;
 
 	function __construct() {
-		
-		self::$options = get_option('rpw_options');
-		
-		if (isset(self::$options['tags'])) $this->update_plugin_options();
 		
 		register_activation_hook(  __FILE__, array(&$this, '_install') );
 		register_deactivation_hook(  __FILE__, array(&$this, '_uninstall') );
@@ -69,6 +65,10 @@ class RecentPostWidget {
 		// import laguage files
 
 		load_plugin_textdomain(self::language_file, false , basename(dirname(__FILE__)).'/languages');
+		
+		self::$options = get_option('rpw_options');
+		
+		if (self::version != self::$options['version']) $this->_update_plugin_options();
 		
 		$RPW_DynamicCSS = new RPW_DynamicCSS;
 		$RPW_Admin = new RPW_Admin;
@@ -111,8 +111,11 @@ class RecentPostWidget {
 	function _install() {
 		
 		$default = array(
+			'version' => self::version,
 			'cache' => array(),
-			'inline' => false
+			'inline' => false,
+			'compress' => false,
+			'css' => "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;"
 		);
 		
 		add_option('rpw_options', $default);
@@ -129,13 +132,21 @@ class RecentPostWidget {
 	
 	// updating options in case they are outdated
 	
-	function _update_plugin_options() {	
+	function _update_plugin_options() {
+		
+		self::$options['css'] = (isset(self::$options['rpw_css'])) ? self::$options['rpw_css'] : '';
 		
 		self::$options['cache'] = array();
 		
-		self::$options['inline'] = false;
+		self::$options['inline'] = (isset(self::$options['inline'])) ? self::$options['inline'] : false;
 		
-		unset(self::$options['tags'], self::$options['sizes']);
+		self::$options['compress'] = (isset(self::$options['compress'])) ? self::$options['compress'] : false;
+		
+		self::$options['version'] = self::version;
+		
+		self::$options['css'] = "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;".self::$options['css'];
+		
+		unset(self::$options['tags'], self::$options['sizes'], self::$options['rpw_css']);
 		
 		update_option('rpw_options', self::$options);
 	

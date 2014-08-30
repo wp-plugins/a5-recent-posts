@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: A5 Recent Post Widget\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/a5-recent-posts\n"
-"POT-Creation-Date: 2014-06-02 19:59+0200\n"
-"PO-Revision-Date: 2014-06-02 19:59+0200\n"
-"Last-Translator: Waldemar Stoffel <stoffel@atelier-fuenf.de>\n"
+"POT-Creation-Date: 2014-08-30 11:48+0200\n"
+"PO-Revision-Date: 2014-08-30 11:48+0200\n"
+"Last-Translator: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
 "Language-Team: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -67,10 +67,10 @@ msgstr "eingeben, um fette, blaue, unterstrichene Links zu bekommen."
 
 #: class-lib/RPW_AdminClass.php:68
 msgid ""
-"You most probably have to use &#34;!important&#34; at the end of each line, "
+"You most probably have to use &#39;!important&#39; at the end of each line, "
 "to make it work."
 msgstr ""
-"Höchstwahrscheinlich musst du &#34;!important&#34; am Ende jeder Zeile "
+"Höchstwahrscheinlich musst du &#39;!important&#39; am Ende jeder Zeile "
 "eingeben, um die Styles zu übernehmen."
 
 #: class-lib/RPW_AdminClass.php:81
@@ -124,170 +124,189 @@ msgstr "Debug"
 #: class-lib/RPW_AdminClass.php:118
 msgid ""
 "If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay "
-"the styles inline. By clicking here you can do so."
+"the styles inline. By clicking here you can do so. (It might be also much "
+"faster in some environments)."
 msgstr ""
 "In manchen Fällen kann das virtuelle Style Sheet nicht erreicht werden. Ein "
-"Ablegen des CSS im Quellcode hilft dann. Hier klicken, um CSS inline zu "
-"schreiben."
+"Ablegen des CSS im Quell-Code hilft dann. Hier klicken, um CSS inline zu "
+"schreiben. (Das könnte in manchen Umgebungen auch sehr viel schneller sein)."
 
-#: class-lib/RPW_AdminClass.php:122
+#: class-lib/RPW_AdminClass.php:120
+msgid "Priority of the inline style:"
+msgstr "Priorität für Stile inline:"
+
+#: class-lib/RPW_AdminClass.php:120
+msgid ""
+"This only affects inline styles. Some other plugins could be using the same "
+"selectors as this one. In that case, writing your&#39;s later in the code "
+"might help."
+msgstr ""
+"Das betrifft nur Stile, die inline geschrieben werden. Einige Plugins "
+"könnten dieselben CSS-Selektoren benutzen, wie dieses. In diesem Fall kann "
+"es helfen, die Stile später in den Quell-Code zu schreiben."
+
+#: class-lib/RPW_AdminClass.php:124
 msgid "entries"
 msgstr "Einträge"
 
-#: class-lib/RPW_AdminClass.php:122
+#: class-lib/RPW_AdminClass.php:124
 msgid "entry"
 msgstr "Eintrag"
 
-#: class-lib/RPW_AdminClass.php:124
+#: class-lib/RPW_AdminClass.php:126
 #, php-format
 msgid "Empty cache (%d %s):"
 msgstr "Cache leeren (%d %s):"
 
-#: class-lib/RPW_AdminClass.php:124
+#: class-lib/RPW_AdminClass.php:126
 msgid "You can empty the plugin&#39;s cache here, if necessary."
 msgstr "Falls nötig, kannst du hier den Cache des Plugins leeren."
 
-#: class-lib/RPW_AdminClass.php:132
+#: class-lib/RPW_AdminClass.php:134
 msgid "Just put some css code here."
 msgstr "Einfach CSS Code hier eingeben."
 
-#: class-lib/RPW_AdminClass.php:192
+#: class-lib/RPW_AdminClass.php:203
 msgid "Cache emptied."
 msgstr "Cache geleert."
 
 #: class-lib/RPW_WidgetClass.php:20
 msgid ""
-"You can display the most recent post in this widget. Define, on what pages "
-"the widget will show."
+"You can display the most recent post(s) in this widget. Define, on what "
+"pages the widget will show."
 msgstr ""
-"Du kannst den neuesten Artikel in diesem Widget anzeigen. Bestimme, auf "
+"Du kannst die neuesten Artikel in diesem Widget anzeigen. Bestimme, auf "
 "welchen Seiten das Widget zu sehen ist."
 
-#: class-lib/RPW_WidgetClass.php:95
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The post"
 msgstr "Artikel"
 
-#: class-lib/RPW_WidgetClass.php:95
+#: class-lib/RPW_WidgetClass.php:101
 msgid "External link"
 msgstr "externer Link"
 
-#: class-lib/RPW_WidgetClass.php:95
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The attachment page"
 msgstr "Attachment Seite"
 
-#: class-lib/RPW_WidgetClass.php:95
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The attachment file"
 msgstr "Attachment URL"
 
-#: class-lib/RPW_WidgetClass.php:95
+#: class-lib/RPW_WidgetClass.php:101
 msgid "Don&#39;t link"
 msgstr "Nicht verlinken"
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Above thumbnail"
 msgstr "Über dem Thumbnail"
 
-#: class-lib/RPW_WidgetClass.php:97 class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:103 class-lib/RPW_WidgetClass.php:107
 msgid "Under thumbnail"
 msgstr "Unter dem Thumbnail"
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Under date"
 msgstr "Unter dem Datum"
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Don&#39;t show title"
 msgstr "Titel nicht anzeigen"
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Under image"
 msgstr "Unter dem Bild"
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Left of image"
 msgstr "Links vom Artikelbild"
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Right of image"
 msgstr "Rechts vom Artikelbild"
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Don&#39;t show excerpt"
 msgstr "Auszug nicht anzeigen"
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Above post"
 msgstr "Über dem Artikel"
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Under post"
 msgstr "Unter dem Artikel"
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Don&#39;t show date"
 msgstr "Datum nicht anzeigen"
 
-#: class-lib/RPW_WidgetClass.php:109
+#: class-lib/RPW_WidgetClass.php:115
 msgid "Homepage"
 msgstr "Homepage"
 
-#: class-lib/RPW_WidgetClass.php:110
+#: class-lib/RPW_WidgetClass.php:116
 msgid "Frontpage (e.g. a static page as homepage)"
 msgstr "Frontpage (z.B. eine statische Seite als Homepage)"
 
-#: class-lib/RPW_WidgetClass.php:111
+#: class-lib/RPW_WidgetClass.php:117
 msgid "&#34;Page&#34; pages"
 msgstr "&#34;Seite&#34; Seiten"
 
-#: class-lib/RPW_WidgetClass.php:112
+#: class-lib/RPW_WidgetClass.php:118
 msgid "Category pages"
 msgstr "Kategorieseiten"
 
-#: class-lib/RPW_WidgetClass.php:113
+#: class-lib/RPW_WidgetClass.php:119
 msgid "Single post pages"
 msgstr "Artikelseiten"
 
-#: class-lib/RPW_WidgetClass.php:114
+#: class-lib/RPW_WidgetClass.php:120
 msgid "Archive pages"
 msgstr "Archivseiten"
 
-#: class-lib/RPW_WidgetClass.php:115
+#: class-lib/RPW_WidgetClass.php:121
 msgid "Tag pages"
 msgstr "Schlagwortseiten"
 
-#: class-lib/RPW_WidgetClass.php:116
+#: class-lib/RPW_WidgetClass.php:122
 msgid "Attachments"
 msgstr "Attachments"
 
-#: class-lib/RPW_WidgetClass.php:117
+#: class-lib/RPW_WidgetClass.php:123
 msgid "Custom Taxonomy pages (only available, if having a plugin)"
 msgstr "Custom Taxonomy Seiten (gibt es nur mit entspr. Plugin)"
 
-#: class-lib/RPW_WidgetClass.php:118
+#: class-lib/RPW_WidgetClass.php:124
 msgid "Author pages"
 msgstr "Autorenseiten"
 
-#: class-lib/RPW_WidgetClass.php:119
+#: class-lib/RPW_WidgetClass.php:125
 msgid "Search Results"
 msgstr "Suchergebnisseiten"
 
-#: class-lib/RPW_WidgetClass.php:120
+#: class-lib/RPW_WidgetClass.php:126
 msgid "&#34;Not Found&#34;"
 msgstr "&#34;Nicht gefunden&#34;"
 
-#: class-lib/RPW_WidgetClass.php:123
+#: class-lib/RPW_WidgetClass.php:129
 msgid "Check all"
 msgstr "Alles auswählen"
 
-#: class-lib/RPW_WidgetClass.php:125
+#: class-lib/RPW_WidgetClass.php:131
 msgid "Title:"
 msgstr "Titel:"
 
-#: class-lib/RPW_WidgetClass.php:126
+#: class-lib/RPW_WidgetClass.php:132
+msgid "How many posts should be displayed in the widget"
+msgstr "Wieviele Artikel sollen im Widget angezeigt werden:"
+
+#: class-lib/RPW_WidgetClass.php:133
 msgid "Width of the thumbnail (in px):"
 msgstr "Breite des Thumbnails (in px):"
 
-#: class-lib/RPW_WidgetClass.php:127
+#: class-lib/RPW_WidgetClass.php:134
 msgid ""
 "Choose here to what you want the widget to link to. It will link to the post "
 "by default."
@@ -295,16 +314,16 @@ msgstr ""
 "Wähle hier, wohin das Widget verlinken soll. Standardmäßig verweist es auf "
 "den Artikel."
 
-#: class-lib/RPW_WidgetClass.php:128
+#: class-lib/RPW_WidgetClass.php:135
 msgid "Check to open the link in another browser window."
 msgstr "Anklicken, um den Link in einem neuen Fenster zu öffnen."
 
-#: class-lib/RPW_WidgetClass.php:129
+#: class-lib/RPW_WidgetClass.php:136
 #, php-format
 msgid "Check to %snot%s display the thumbnail of the post."
 msgstr "Anklicken, wenn %skein%s Thumbnail gewünscht wird."
 
-#: class-lib/RPW_WidgetClass.php:130
+#: class-lib/RPW_WidgetClass.php:137
 #, php-format
 msgid ""
 "If wanting a border around the image, write the style here. %s would make it "
@@ -313,7 +332,7 @@ msgstr ""
 "Wenn du einen Rahmen um das Bild willst, style es hier. %s sorgt für einen "
 "schwarzen, 1px weiten Rahmen."
 
-#: class-lib/RPW_WidgetClass.php:131
+#: class-lib/RPW_WidgetClass.php:138
 msgid ""
 "Choose, whether or not to display the title and whether it comes above or "
 "under the thumbnail."
@@ -321,11 +340,11 @@ msgstr ""
 "Wähle ob und Titel angezeigt werden soll und ob er über oder unter dem "
 "Thumbnail sein soll."
 
-#: class-lib/RPW_WidgetClass.php:132
+#: class-lib/RPW_WidgetClass.php:139
 msgid "Weight of the Post Title:"
 msgstr "Gewicht der Überschrift:"
 
-#: class-lib/RPW_WidgetClass.php:133
+#: class-lib/RPW_WidgetClass.php:140
 msgid ""
 "Choose, whether or not to display the publishing date and whether it comes "
 "above or under the post."
@@ -333,7 +352,7 @@ msgstr ""
 "Wähle, ob das Artikeldatum angezeigt werden soll, und ob es über oder unter "
 "dem Artikel zu sehen sein soll."
 
-#: class-lib/RPW_WidgetClass.php:134
+#: class-lib/RPW_WidgetClass.php:141
 msgid ""
 "Choose, whether or not to display the excerpt and whether it comes under the "
 "thumbnail or next to it."
@@ -341,14 +360,14 @@ msgstr ""
 "Wähle, ob der Auszug angezeigt werden soll, und ob er unter das Thumbnail "
 "kommt oder daneben."
 
-#: class-lib/RPW_WidgetClass.php:135
+#: class-lib/RPW_WidgetClass.php:142
 msgid ""
 "Check to suppress shortcodes in the widget (in case the content is showing)."
 msgstr ""
 "Anklicken, um Shortcode im Widget zu unterdrücken (falls der Artikel "
 "angezeigt wird)."
 
-#: class-lib/RPW_WidgetClass.php:136
+#: class-lib/RPW_WidgetClass.php:143
 msgid ""
 "Check to return the excerpt unfiltered (might avoid interferences with other "
 "plugins)."
@@ -356,7 +375,17 @@ msgstr ""
 "Anklicken, um den Auszug ungefiltert zu bekommen (das könnte Interferenzen "
 "mit anderen Plugins vermeiden)."
 
-#: class-lib/RPW_WidgetClass.php:137
+#: class-lib/RPW_WidgetClass.php:144
+msgid "In case there is no excerpt defined, how many sentences are displayed:"
+msgstr ""
+"Wie viele Sätze des Posts sollen angezeigt werden, falls kein Auszug "
+"definiert ist:"
+
+#: class-lib/RPW_WidgetClass.php:145
+msgid "Check to display words instead of sentences."
+msgstr "Anklicken, um Wörter anstatt Sätze als Auszug zu nehmen."
+
+#: class-lib/RPW_WidgetClass.php:146
 msgid ""
 "Check to have an additional &#39;read more&#39; link at the end of the "
 "excerpt."
@@ -364,21 +393,21 @@ msgstr ""
 "Anklicken, um einen zusätzlichen &#39;mehr lesen&#39;-Link am Ende des "
 "Auszugs anzuzeigen."
 
-#: class-lib/RPW_WidgetClass.php:138
+#: class-lib/RPW_WidgetClass.php:147
 #, php-format
 msgid ""
 "Write here some text for the &#39;read more&#39; link. By default, it is %s:"
 msgstr ""
 "Schreibe hier einen Text für den &#39;mehr lesen&#39;-Link. Standard ist %s:"
 
-#: class-lib/RPW_WidgetClass.php:139
+#: class-lib/RPW_WidgetClass.php:148
 msgid ""
 "If you want to style the &#39;read more&#39; link, you can enter a class "
 "here."
 msgstr ""
 "Um den &#39;mehr lesen&#39;-Link zu stylen, einfach hier eine Klasse angeben."
 
-#: class-lib/RPW_WidgetClass.php:140
+#: class-lib/RPW_WidgetClass.php:149
 msgid ""
 "Check, where you want to show the widget. By default, it is showing on the "
 "homepage and the category pages:"
@@ -386,7 +415,7 @@ msgstr ""
 "Klicke an, wo das Widget gezeigt werden soll. Standardmäßig erscheint es auf "
 "der Homepage und in den Kategorien."
 
-#: class-lib/RPW_WidgetClass.php:141
+#: class-lib/RPW_WidgetClass.php:150
 #, php-format
 msgid ""
 "Here you can finally style the widget. Simply type something like%sto get "
