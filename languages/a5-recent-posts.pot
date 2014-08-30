@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: A5 Recent Post Widget\n"
-"POT-Creation-Date: 2014-08-20 00:40+0200\n"
-"PO-Revision-Date: 2014-08-20 00:40+0200\n"
+"POT-Creation-Date: 2014-08-30 11:49+0200\n"
+"PO-Revision-Date: 2014-08-30 11:49+0200\n"
 "Last-Translator: Waldemar Stoffel <stoffel@atelier-furnf.de>\n"
 "Language-Team: Waldemar Stoffel <stoffel@atelier-fuenf.de>\n"
 "MIME-Version: 1.0\n"
@@ -159,214 +159,222 @@ msgid ""
 "pages the widget will show."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The post"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:101
 msgid "External link"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The attachment page"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:101
 msgid "The attachment file"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:97
+#: class-lib/RPW_WidgetClass.php:101
 msgid "Don&#39;t link"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Above thumbnail"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:99 class-lib/RPW_WidgetClass.php:103
+#: class-lib/RPW_WidgetClass.php:103 class-lib/RPW_WidgetClass.php:107
 msgid "Under thumbnail"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Under date"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:99
+#: class-lib/RPW_WidgetClass.php:103
 msgid "Don&#39;t show title"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Under image"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Left of image"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Right of image"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:101
+#: class-lib/RPW_WidgetClass.php:105
 msgid "Don&#39;t show excerpt"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:103
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Above post"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:103
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Under post"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:103
+#: class-lib/RPW_WidgetClass.php:107
 msgid "Don&#39;t show date"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:111
+#: class-lib/RPW_WidgetClass.php:115
 msgid "Homepage"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:112
+#: class-lib/RPW_WidgetClass.php:116
 msgid "Frontpage (e.g. a static page as homepage)"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:113
+#: class-lib/RPW_WidgetClass.php:117
 msgid "&#34;Page&#34; pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:114
+#: class-lib/RPW_WidgetClass.php:118
 msgid "Category pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:115
+#: class-lib/RPW_WidgetClass.php:119
 msgid "Single post pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:116
+#: class-lib/RPW_WidgetClass.php:120
 msgid "Archive pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:117
+#: class-lib/RPW_WidgetClass.php:121
 msgid "Tag pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:118
+#: class-lib/RPW_WidgetClass.php:122
 msgid "Attachments"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:119
+#: class-lib/RPW_WidgetClass.php:123
 msgid "Custom Taxonomy pages (only available, if having a plugin)"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:120
+#: class-lib/RPW_WidgetClass.php:124
 msgid "Author pages"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:121
+#: class-lib/RPW_WidgetClass.php:125
 msgid "Search Results"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:122
+#: class-lib/RPW_WidgetClass.php:126
 msgid "&#34;Not Found&#34;"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:125
+#: class-lib/RPW_WidgetClass.php:129
 msgid "Check all"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:127
+#: class-lib/RPW_WidgetClass.php:131
 msgid "Title:"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:128
+#: class-lib/RPW_WidgetClass.php:132
 msgid "How many posts should be displayed in the widget"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:129
+#: class-lib/RPW_WidgetClass.php:133
 msgid "Width of the thumbnail (in px):"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:130
+#: class-lib/RPW_WidgetClass.php:134
 msgid ""
 "Choose here to what you want the widget to link to. It will link to the post "
 "by default."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:131
+#: class-lib/RPW_WidgetClass.php:135
 msgid "Check to open the link in another browser window."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:132
+#: class-lib/RPW_WidgetClass.php:136
 #, php-format
 msgid "Check to %snot%s display the thumbnail of the post."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:133
+#: class-lib/RPW_WidgetClass.php:137
 #, php-format
 msgid ""
 "If wanting a border around the image, write the style here. %s would make it "
 "a black border, 1px wide."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:134
+#: class-lib/RPW_WidgetClass.php:138
 msgid ""
 "Choose, whether or not to display the title and whether it comes above or "
 "under the thumbnail."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:135
+#: class-lib/RPW_WidgetClass.php:139
 msgid "Weight of the Post Title:"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:136
+#: class-lib/RPW_WidgetClass.php:140
 msgid ""
 "Choose, whether or not to display the publishing date and whether it comes "
 "above or under the post."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:137
+#: class-lib/RPW_WidgetClass.php:141
 msgid ""
 "Choose, whether or not to display the excerpt and whether it comes under the "
 "thumbnail or next to it."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:138
+#: class-lib/RPW_WidgetClass.php:142
 msgid ""
 "Check to suppress shortcodes in the widget (in case the content is showing)."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:139
+#: class-lib/RPW_WidgetClass.php:143
 msgid ""
 "Check to return the excerpt unfiltered (might avoid interferences with other "
 "plugins)."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:140
+#: class-lib/RPW_WidgetClass.php:144
+msgid "In case there is no excerpt defined, how many sentences are displayed:"
+msgstr ""
+
+#: class-lib/RPW_WidgetClass.php:145
+msgid "Check to display words instead of sentences."
+msgstr ""
+
+#: class-lib/RPW_WidgetClass.php:146
 msgid ""
 "Check to have an additional &#39;read more&#39; link at the end of the "
 "excerpt."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:141
+#: class-lib/RPW_WidgetClass.php:147
 #, php-format
 msgid ""
 "Write here some text for the &#39;read more&#39; link. By default, it is %s:"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:142
+#: class-lib/RPW_WidgetClass.php:148
 msgid ""
 "If you want to style the &#39;read more&#39; link, you can enter a class "
 "here."
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:143
+#: class-lib/RPW_WidgetClass.php:149
 msgid ""
 "Check, where you want to show the widget. By default, it is showing on the "
 "homepage and the category pages:"
 msgstr ""
 
-#: class-lib/RPW_WidgetClass.php:144
+#: class-lib/RPW_WidgetClass.php:150
 #, php-format
 msgid ""
 "Here you can finally style the widget. Simply type something like%sto get "

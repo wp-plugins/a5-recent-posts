@@ -307,6 +307,6 @@ class A5_DynamicFiles {
 		
 	}
 	
-} // A5_Dynamic CSS
+} // A5_Dynamic Files
 
 ?>
