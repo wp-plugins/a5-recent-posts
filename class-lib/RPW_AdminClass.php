@@ -36,6 +36,8 @@ class RPW_Admin extends A5_OptionPage {
 		
 		wp_enqueue_script('dashboard');
 		
+		if (wp_is_mobile()) wp_enqueue_script('jquery-touch-punch');
+		
 	}
 	
 	/**
@@ -56,43 +58,35 @@ class RPW_Admin extends A5_OptionPage {
 	 */
 	function build_options_page() {
 		
-		parent::open_page('A5 Recent Post Widget', __('http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget', self::language_file), 'a5-recent-posts', __('Plugin Support', self::language_file));
+		self::open_page('A5 Recent Post Widget', __('http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget', self::language_file), 'a5-recent-posts', __('Plugin Support', self::language_file));
 		
-		_e('Style the links of the widget. If you leave this empty, your theme will style the hyperlinks.', self::language_file); ?>
-		<p><?php _e('Just input something like,', self::language_file); ?></p>
-		<p><strong>font-weight: bold;<br />
-		color: #0000ff;<br />
-		text-decoration: underline;    
-		</strong></p>
-		<?php _e('to get fat, blue, underlined links.', self::language_file); ?></p>
-		<p><strong><?php _e('You most probably have to use &#39;!important&#39; at the end of each line, to make it work.', self::language_file); ?></strong></p>
-		<?php
+		_e('Style the links of the widget. If you leave this empty, your theme will style the hyperlinks.', self::language_file);
 		
-		parent::open_form('options.php');
+        self::tag_it(__('Just input something like,', self::language_file), 'p', false, false, true);
+				
+        self::tag_it(self::tag_it('font-weight: bold;<br />color: #0000ff;<br />text-decoration: underline;', 'strong'), 'p', false, false, true);
+		
+		self::tag_it(__('to get fat, blue, underlined links.', self::language_file), 'p', false, false, true);
+		
+        self::tag_it(self::tag_it(__('You most probably have to use &#39;!important&#39; at the end of each line, to make it work.', self::language_file), 'strong'), 'p', false, false, true);
+		
+		self::open_form('options.php');
 		
 		settings_fields('rpw_options');
 		do_settings_sections('rpw_styles');
 		submit_button();
 		
 		if (WP_DEBUG === true) :
+		
+			self::open_tab();
 			
-			echo '<div id="poststuff">';
-			
-			parent::open_draggable(__('Debug Info', self::language_file), 'debug-info');
-			
-			echo '<pre>';
-			
-			var_dump(self::$options);
-			
-			echo '</pre>';
-			
-			parent::close_draggable();
-			
-			echo '</div>';
+			self::sortable('deep-down', self::debug_info(self::$options, __('Debug Info', self::language_file)));
+		
+			self::close_tab();
 		
 		endif;
 		
-		parent::close_page();
+		self::close_page();
 		
 	}
 	
@@ -183,7 +177,7 @@ class RPW_Admin extends A5_OptionPage {
 	
 	function resize_field() {
 		
-		a5_resize_textarea(array('link', 'hover', 'rpw_css'), true);
+		a5_resize_textarea(array('link', 'hover', 'css'), true);
 		
 	}
 		
