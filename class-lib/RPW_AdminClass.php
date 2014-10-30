@@ -30,7 +30,7 @@ class RPW_Admin extends A5_OptionPage {
 	 * Make debug info collapsable
 	 *
 	 */
-	function enqueue_scripts($hook){
+	function enqueue_scripts($hook) {
 		
 		if ('settings_page_a5-recent-posts-settings' != $hook) return;
 		

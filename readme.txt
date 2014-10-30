@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: sidebar, widget, post, newspaper, recent post, feature, spotlight, flexible, recent posts
 Requires at least: 2.7
 Tested up to: 4.1
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 
 With the A5 Recent Post Widget you can put your latest post in the focus and style it differently.
 
@@ -67,6 +67,10 @@ Since the stylesheet of the theme will have highest priority, you will have to m
 3. The plugin's settings section
 
 == Changelog ==
+
+= 2.5.3 =
+
+* Adjustments in Framework
 
 = 2.5.2 =
 
@@ -164,6 +168,10 @@ DSS more flexible, ability to show more posts
 
 You can now set the length of the excerpt
 
-= 2.6.1 =
+= 2.5.2 =
+
+Framework adjusted
+
+= 2.5.3 =
 
 Framework adjusted

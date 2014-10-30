@@ -55,6 +55,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			'author' => false,
 			'search' => false,
 			'not_found' => false,
+			'login_page' => false,
 			'show_date' => NULL,
 			'h' => 3,
 			'alignment' => NULL,
@@ -90,6 +91,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$author=esc_attr($instance['author']);
 		$search=esc_attr($instance['search']);
 		$not_found=esc_attr($instance['not_found']);
+		$login_page=esc_attr($instance['login_page']);
 		$show_date=esc_attr($instance['show_date']);
 		$h=esc_attr($instance['h']);
 		$alignment=esc_attr($instance['alignment']);
@@ -123,7 +125,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
 			array($base_id.'author', $base_name.'[author]', $author, __('Author pages', self::language_file)),
 			array($base_id.'search', $base_name.'[search]', $search, __('Search Results', self::language_file)),
-			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file))
+			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file)),
+			array($base_id.'login_page', $base_name.'[login_page]', $login_page, __('Login Page (only available, if having a plugin)', self::language_file))
 		);
 		
 		$checkall = array($base_id.'checkall', $base_name.'[checkall]', __('Check all', self::language_file));
@@ -180,6 +183,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['author'] = @$new_instance['author'];
 		$instance['search'] = @$new_instance['search'];
 		$instance['not_found'] = @$new_instance['not_found'];
+		$instance['login_page'] = @$new_instance['login_page'];
 		$instance['show_date'] = strip_tags($new_instance['show_date']);
 		$instance['h'] = strip_tags($new_instance['h']);
 		$instance['alignment'] = strip_tags($new_instance['alignment']);
@@ -196,18 +200,19 @@ class A5_Recent_Post_Widget extends WP_Widget {
 	
 		// get the type of page, we're actually on
 		
-		if (is_front_page()) $rpw_pagetype='frontpage';
-		if (is_home()) $rpw_pagetype='homepage';
-		if (is_page()) $rpw_pagetype='page';
-		if (is_category()) $rpw_pagetype='category';
-		if (is_single()) $rpw_pagetype='single';
-		if (is_date() || is_archive()) $rpw_pagetype='date';
-		if (is_tag()) $rpw_pagetype='tag';
-		if (is_attachment()) $rpw_pagetype='attachment';
-		if (is_tax()) $rpw_pagetype='taxonomy';
-		if (is_author()) $rpw_pagetype='author';
-		if (is_search()) $rpw_pagetype='search';
-		if (is_404()) $rpw_pagetype='not_found';
+		if (is_front_page()) $rpw_pagetype = 'frontpage';
+		if (is_home()) $rpw_pagetype = 'homepage';
+		if (is_page()) $rpw_pagetype = 'page';
+		if (is_category()) $rpw_pagetype = 'category';
+		if (is_single()) $rpw_pagetype = 'single';
+		if (is_date() || is_archive()) $rpw_pagetype = 'date';
+		if (is_tag()) $rpw_pagetype = 'tag';
+		if (is_attachment()) $rpw_pagetype = 'attachment';
+		if (is_tax()) $rpw_pagetype = 'taxonomy';
+		if (is_author()) $rpw_pagetype = 'author';
+		if (is_search()) $rpw_pagetype = 'search';
+		if (is_404()) $rpw_pagetype = 'not_found';
+		if (!isset($rpw_pagetype)) $rpw_pagetype = 'login_page';
 		
 		// display only, if said so in the settings of the widget
 		

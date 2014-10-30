@@ -37,17 +37,17 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		
 			$style = str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['css']));
 			
-			parent::$wp_styles .= 'div'.$css_selector.','.$eol.'li'.$css_selector.','.$eol.'aside'.$css_selector.' {'.$eol.$tab.$style.$eol.'}'.$eol;
+			parent::$wp_styles .= parent::build_widget_css($css_selector, '').'{'.$eol.$tab.$style.$eol.'}'.$eol;
 			
 		endif;
 			
-		parent::$wp_styles.='div'.$css_selector.' img,'.$eol.'li'.$css_selector.' img,'.$eol.'aside'.$css_selector.' img {'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
+		parent::$wp_styles .= parent::build_widget_css($css_selector, 'img').'{'.$eol.$tab.'height: auto;'.$eol.$tab.'max-width: 100%;'.$eol.'}'.$eol;
 		
 		if (!empty (self::$options['link'])) :
 		
 			$style=str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['link']));
 		
-			parent::$wp_styles.='div'.$css_selector.' a,'.$eol.'li'.$css_selector.' a,'.$eol.'aside'.$css_selector.' a {'.$eol.$tab.$style.$eol.'}'.$eol;
+			parent::$wp_styles .= parent::build_widget_css($css_selector, 'a').'{'.$eol.$tab.$style.$eol.'}'.$eol;
 			
 		endif;
 		
@@ -55,7 +55,7 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		
 			$style=str_replace('; ', ';'.$eol.$tab, str_replace(array("\r\n", "\n", "\r"), ' ', self::$options['hover']));
 		
-			parent::$wp_styles.='div'.$css_selector.' a:hover,'.$eol.'li'.$css_selector.' a:hover,'.$eol.'aside'.$css_selector.' a:hover {'.$eol.$tab.$style.$eol.'}'.$eol;
+			parent::$wp_styles .= parent::build_widget_css($css_selector, 'a:hover').'{'.$eol.$tab.$style.$eol.'}'.$eol;
 			
 		endif;
 
