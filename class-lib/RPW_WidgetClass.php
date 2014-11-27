@@ -49,6 +49,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			'category' => false,
 			'single' => 1,
 			'date' => false,
+			'archive' => false,
 			'tag' => false,
 			'attachment' => false,
 			'taxonomy' => false,
@@ -62,7 +63,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			'imgborder' => NULL,
 			'posts_per_page' => 1,
 			'wordcount' => 3,
-			'words' => false
+			'words' => false,
+			'sticky' => false
 		);
 		
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -85,6 +87,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$category=esc_attr($instance['category']);
 		$single=esc_attr($instance['single']);
 		$date=esc_attr($instance['date']);
+		$archive=esc_attr($instance['archive']);
 		$tag=esc_attr($instance['tag']);
 		$attachment=esc_attr($instance['attachment']);
 		$taxonomy=esc_attr($instance['taxonomy']);
@@ -99,6 +102,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$posts_per_page = esc_attr($instance['posts_per_page']);
 		$wordcount = esc_attr($instance['wordcount']);
 		$words = esc_attr($instance['words']);
+		$sticky = esc_attr($instance['sticky']);
 		
 		$link_options = array (array('post', __('The post', self::language_file)), array('extern', __('External link', self::language_file)), array('page', __('The attachment page', self::language_file)), array('file', __('The attachment file', self::language_file)), array('none', __('Don&#39;t link', self::language_file)));
 		
@@ -120,6 +124,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			array($base_id.'category', $base_name.'[category]', $category, __('Category pages', self::language_file)),
 			array($base_id.'single', $base_name.'[single]', $single, __('Single post pages', self::language_file)),
 			array($base_id.'date', $base_name.'[date]', $date, __('Archive pages', self::language_file)),
+			array($base_id.'archive', $base_name.'[archive]', $date, __('Post type archives', self::language_file)),
 			array($base_id.'tag', $base_name.'[tag]', $tag, __('Tag pages', self::language_file)),
 			array($base_id.'attachment', $base_name.'[attachment]', $attachment, __('Attachments', self::language_file)),
 			array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
@@ -133,6 +138,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		
 		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_number_field($base_id.'posts_per_page', $base_name.'[posts_per_page]', $posts_per_page, __('How many posts should be displayed in the widget', self::language_file), array('space' => true, 'size' => 4, 'step' => 1, 'min' => 1));
+		a5_checkbox($base_id.'sticky', $base_name.'[sticky]', $target, __('Check to have only sticky posts.', self::language_file), array('space' => true));
 		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
 		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', self::language_file), false, array('space' => true));
 		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', self::language_file), array('space' => true));
@@ -176,7 +182,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['page'] = @$new_instance['page'];
 		$instance['category'] = @$new_instance['category'];
 		$instance['single'] = @$new_instance['single'];
-		$instance['date'] = @$new_instance['date']; 
+		$instance['date'] = @$new_instance['date'];
+		$instance['archive'] = @$new_instance['archive'];
 		$instance['tag'] = @$new_instance['tag'];
 		$instance['attachment'] = @$new_instance['attachment'];
 		$instance['taxonomy'] = @$new_instance['taxonomy'];
@@ -191,13 +198,14 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['posts_per_page'] = strip_tags($new_instance['posts_per_page']);
 		$instance['wordcount'] = strip_tags($new_instance['wordcount']);
 		$instance['words'] = @$new_instance['words'];
+		$instance['sticky'] = @$new_instance['sticky'];
 		
 		return $instance;
 	
 	} // update
  
 	function widget($args, $instance) {
-	
+		
 		// get the type of page, we're actually on
 		
 		if (is_front_page()) $rpw_pagetype = 'frontpage';
@@ -205,7 +213,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		if (is_page()) $rpw_pagetype = 'page';
 		if (is_category()) $rpw_pagetype = 'category';
 		if (is_single()) $rpw_pagetype = 'single';
-		if (is_date() || is_archive()) $rpw_pagetype = 'date';
+		if (is_date()) $rpw_pagetype = 'date';
+		if (is_archive()) $rpw_pagetype = 'archive';
 		if (is_tag()) $rpw_pagetype = 'tag';
 		if (is_attachment()) $rpw_pagetype = 'attachment';
 		if (is_tax()) $rpw_pagetype = 'taxonomy';
@@ -246,6 +255,12 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			global $wp_query, $post;
 			
 			$rpw_args['posts_per_page'] = $instance['posts_per_page'];
+			
+			if ($instance['sticky']) :
+			
+				$rpw_args['post__in'] = get_option('sticky_posts');
+			
+			endif;
 			
 			if (is_single()) $rpw_args['post__not_in'] = array($wp_query->get_queried_object_id());
 			

@@ -29,7 +29,7 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		$eol = (self::$options['compress']) ? '' : "\r\n";
 		$tab = (self::$options['compress']) ? ' ' : "\t";
 		
-		$css_selector = '.widget_a5_recent_post_widget[id^="a5_recent_post_widget"]';
+		$css_selector = 'widget_a5_recent_post_widget[id^="a5_recent_post_widget"]';
 		
 		parent::$wp_styles .= (!self::$options['compress']) ? $eol.'/* CSS portion of the A5 Recent Post Widget */'.$eol.$eol : '';
 		
