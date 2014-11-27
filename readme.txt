@@ -3,8 +3,8 @@ Contributors: tepelstreel
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YGA57UKZQVP4A
 Tags: sidebar, widget, post, newspaper, recent post, feature, spotlight, flexible, recent posts
 Requires at least: 2.7
-Tested up to: 4.0
-Stable tag: 2.5.1
+Tested up to: 4.1
+Stable tag: 2.5.4
 
 With the A5 Recent Post Widget you can put your latest post in the focus and style it differently.
 
@@ -12,7 +12,7 @@ With the A5 Recent Post Widget you can put your latest post in the focus and sty
 
 Yet another recent post widget. It shows the last post of your blog, where and how you want. You can define, on which pages of your site it shows and whether you want to show a post thumbnail or not. Decide, whether the links go to the post, to the attachment page or simply to a file. You can style the links in the plugins settings and each widget container differently. 
 
-The plugin was tested up to WP 3.9.1 and should work with versions down to 2.7 but was never tested on those.
+The plugin was tested up to WP 4.1 and should work with versions down to 2.7 but was never tested on those.
 
 == Installation ==
 
@@ -67,6 +67,19 @@ Since the stylesheet of the theme will have highest priority, you will have to m
 3. The plugin's settings section
 
 == Changelog ==
+
+= 2.5.4 =
+
+* Adjustments in Framework
+* More raliable with galleries
+
+= 2.5.3 =
+
+* Adjustments in Framework
+
+= 2.5.2 =
+
+* Adjustments in Framework
 
 = 2.5.1 =
 
@@ -159,3 +172,14 @@ DSS more flexible, ability to show more posts
 = 2.5.1 =
 
 You can now set the length of the excerpt
+
+= 2.5.2 =
+
+Framework adjusted
+
+= 2.5.3 =
+
+Framework adjusted
+
+= 2.5.4 =
+Framework adjusted; more raliable with galleries

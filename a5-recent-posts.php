@@ -3,7 +3,7 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.5.1
+Version: 2.5.4
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
@@ -55,12 +55,12 @@ class RecentPostWidget {
 
 	function __construct() {
 		
-		register_activation_hook(  __FILE__, array(&$this, '_install') );
-		register_deactivation_hook(  __FILE__, array(&$this, '_uninstall') );
+		register_activation_hook(  __FILE__, array($this, '_install') );
+		register_deactivation_hook(  __FILE__, array($this, '_uninstall') );
 		
-		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-		add_filter('plugin_row_meta', array(&$this, 'register_links'), 10, 2);
-		add_filter('plugin_action_links', array(&$this, 'register_action_links'), 10, 2);
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+		add_filter('plugin_row_meta', array($this, 'register_links'), 10, 2);
+		add_filter('plugin_action_links', array($this, 'register_action_links'), 10, 2);
 		
 		// import laguage files
 
@@ -68,7 +68,7 @@ class RecentPostWidget {
 		
 		self::$options = get_option('rpw_options');
 		
-		if (self::version != self::$options['version']) $this->_update_plugin_options();
+		if (self::version != self::$options['version']) $this->_update_options();
 		
 		$RPW_DynamicCSS = new RPW_DynamicCSS;
 		$RPW_Admin = new RPW_Admin;
@@ -79,9 +79,11 @@ class RecentPostWidget {
 	
 	function enqueue_scripts($hook) {
 		
-		if ($hook != 'widgets.php' && $hook != 'settings_page_a5-recent-posts-settings') return;
+		if ($hook != 'widgets.php' && $hook != 'post.php' && $hook != 'settings_page_a5-recent-posts-settings') return;
 		
-		wp_register_script('ta-expander-script', plugins_url('ta-expander.js', __FILE__), array('jquery'), '3.0', true);
+		$min = (WP_DEBUG == false) ? '.min.' : '.';
+		
+		wp_register_script('ta-expander-script', plugins_url('ta-expander'.$min.'js', __FILE__), array('jquery'), '3.0', true);
 		wp_enqueue_script('ta-expander-script');
 	
 	}
@@ -132,23 +134,23 @@ class RecentPostWidget {
 	
 	// updating options in case they are outdated
 	
-	function _update_plugin_options() {
+	function _update_options() {
 		
-		self::$options['css'] = (isset(self::$options['rpw_css'])) ? self::$options['rpw_css'] : '';
+		$options_old = get_option('rpw_options');
 		
-		self::$options['cache'] = array();
+		$options_new['css'] = (isset($options_old['rpw_css'])) ? $options_old['rpw_css'] : '';
 		
-		self::$options['inline'] = (isset(self::$options['inline'])) ? self::$options['inline'] : false;
+		$options_new['cache'] = array();
 		
-		self::$options['compress'] = (isset(self::$options['compress'])) ? self::$options['compress'] : false;
+		$options_new['inline'] = (isset($options_old['inline'])) ? $options_old['inline'] : false;
 		
-		self::$options['version'] = self::version;
+		$options_new['compress'] = (isset($options_old['compress'])) ? $options_old['compress'] : false;
 		
-		self::$options['css'] = "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;".self::$options['css'];
+		$options_new['version'] = self::version;
 		
-		unset(self::$options['tags'], self::$options['sizes'], self::$options['rpw_css']);
+		$options_new['css'] .= "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;".$options_new['css'];
 		
-		update_option('rpw_options', self::$options);
+		update_option('rpw_options', $options_new);
 	
 	}
 

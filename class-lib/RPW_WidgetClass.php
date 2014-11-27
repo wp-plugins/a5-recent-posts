@@ -49,19 +49,22 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			'category' => false,
 			'single' => 1,
 			'date' => false,
+			'archive' => false,
 			'tag' => false,
 			'attachment' => false,
 			'taxonomy' => false,
 			'author' => false,
 			'search' => false,
 			'not_found' => false,
+			'login_page' => false,
 			'show_date' => NULL,
 			'h' => 3,
 			'alignment' => NULL,
 			'imgborder' => NULL,
 			'posts_per_page' => 1,
 			'wordcount' => 3,
-			'words' => false
+			'words' => false,
+			'sticky' => false
 		);
 		
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -84,12 +87,14 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$category=esc_attr($instance['category']);
 		$single=esc_attr($instance['single']);
 		$date=esc_attr($instance['date']);
+		$archive=esc_attr($instance['archive']);
 		$tag=esc_attr($instance['tag']);
 		$attachment=esc_attr($instance['attachment']);
 		$taxonomy=esc_attr($instance['taxonomy']);
 		$author=esc_attr($instance['author']);
 		$search=esc_attr($instance['search']);
 		$not_found=esc_attr($instance['not_found']);
+		$login_page=esc_attr($instance['login_page']);
 		$show_date=esc_attr($instance['show_date']);
 		$h=esc_attr($instance['h']);
 		$alignment=esc_attr($instance['alignment']);
@@ -97,6 +102,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$posts_per_page = esc_attr($instance['posts_per_page']);
 		$wordcount = esc_attr($instance['wordcount']);
 		$words = esc_attr($instance['words']);
+		$sticky = esc_attr($instance['sticky']);
 		
 		$link_options = array (array('post', __('The post', self::language_file)), array('extern', __('External link', self::language_file)), array('page', __('The attachment page', self::language_file)), array('file', __('The attachment file', self::language_file)), array('none', __('Don&#39;t link', self::language_file)));
 		
@@ -118,18 +124,21 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			array($base_id.'category', $base_name.'[category]', $category, __('Category pages', self::language_file)),
 			array($base_id.'single', $base_name.'[single]', $single, __('Single post pages', self::language_file)),
 			array($base_id.'date', $base_name.'[date]', $date, __('Archive pages', self::language_file)),
+			array($base_id.'archive', $base_name.'[archive]', $date, __('Post type archives', self::language_file)),
 			array($base_id.'tag', $base_name.'[tag]', $tag, __('Tag pages', self::language_file)),
 			array($base_id.'attachment', $base_name.'[attachment]', $attachment, __('Attachments', self::language_file)),
 			array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
 			array($base_id.'author', $base_name.'[author]', $author, __('Author pages', self::language_file)),
 			array($base_id.'search', $base_name.'[search]', $search, __('Search Results', self::language_file)),
-			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file))
+			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file)),
+			array($base_id.'login_page', $base_name.'[login_page]', $login_page, __('Login Page (only available, if having a plugin)', self::language_file))
 		);
 		
 		$checkall = array($base_id.'checkall', $base_name.'[checkall]', __('Check all', self::language_file));
 		
 		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_number_field($base_id.'posts_per_page', $base_name.'[posts_per_page]', $posts_per_page, __('How many posts should be displayed in the widget', self::language_file), array('space' => true, 'size' => 4, 'step' => 1, 'min' => 1));
+		a5_checkbox($base_id.'sticky', $base_name.'[sticky]', $target, __('Check to have only sticky posts.', self::language_file), array('space' => true));
 		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
 		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', self::language_file), false, array('space' => true));
 		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', self::language_file), array('space' => true));
@@ -147,8 +156,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		a5_text_field($base_id.'rmtext', $base_name.'[rmtext]', $rmtext, sprintf(__('Write here some text for the &#39;read more&#39; link. By default, it is %s:', self::language_file), '[&#8230;]'), array('space' => true, 'class' => 'widefat'));
 		a5_text_field($base_id.'rmclass', $base_name.'[rmclass]', $rmclass, __('If you want to style the &#39;read more&#39; link, you can enter a class here.', self::language_file), array('space' => true, 'class' => 'widefat'));
 		a5_checkgroup(false, false, $pages, __('Check, where you want to show the widget. By default, it is showing on the homepage and the category pages:', self::language_file), $checkall);
-		if(empty(self::$options['css'])) a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
-		a5_resize_textarea(array($base_id.'style'), true);
+		a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
+		a5_resize_textarea($base_id.'style', true);
 	
 	} // form
 	
@@ -173,13 +182,15 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['page'] = @$new_instance['page'];
 		$instance['category'] = @$new_instance['category'];
 		$instance['single'] = @$new_instance['single'];
-		$instance['date'] = @$new_instance['date']; 
+		$instance['date'] = @$new_instance['date'];
+		$instance['archive'] = @$new_instance['archive'];
 		$instance['tag'] = @$new_instance['tag'];
 		$instance['attachment'] = @$new_instance['attachment'];
 		$instance['taxonomy'] = @$new_instance['taxonomy'];
 		$instance['author'] = @$new_instance['author'];
 		$instance['search'] = @$new_instance['search'];
 		$instance['not_found'] = @$new_instance['not_found'];
+		$instance['login_page'] = @$new_instance['login_page'];
 		$instance['show_date'] = strip_tags($new_instance['show_date']);
 		$instance['h'] = strip_tags($new_instance['h']);
 		$instance['alignment'] = strip_tags($new_instance['alignment']);
@@ -187,27 +198,30 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$instance['posts_per_page'] = strip_tags($new_instance['posts_per_page']);
 		$instance['wordcount'] = strip_tags($new_instance['wordcount']);
 		$instance['words'] = @$new_instance['words'];
+		$instance['sticky'] = @$new_instance['sticky'];
 		
 		return $instance;
 	
 	} // update
  
 	function widget($args, $instance) {
-	
+		
 		// get the type of page, we're actually on
 		
-		if (is_front_page()) $rpw_pagetype='frontpage';
-		if (is_home()) $rpw_pagetype='homepage';
-		if (is_page()) $rpw_pagetype='page';
-		if (is_category()) $rpw_pagetype='category';
-		if (is_single()) $rpw_pagetype='single';
-		if (is_date() || is_archive()) $rpw_pagetype='date';
-		if (is_tag()) $rpw_pagetype='tag';
-		if (is_attachment()) $rpw_pagetype='attachment';
-		if (is_tax()) $rpw_pagetype='taxonomy';
-		if (is_author()) $rpw_pagetype='author';
-		if (is_search()) $rpw_pagetype='search';
-		if (is_404()) $rpw_pagetype='not_found';
+		if (is_front_page()) $rpw_pagetype = 'frontpage';
+		if (is_home()) $rpw_pagetype = 'homepage';
+		if (is_page()) $rpw_pagetype = 'page';
+		if (is_category()) $rpw_pagetype = 'category';
+		if (is_single()) $rpw_pagetype = 'single';
+		if (is_date()) $rpw_pagetype = 'date';
+		if (is_archive()) $rpw_pagetype = 'archive';
+		if (is_tag()) $rpw_pagetype = 'tag';
+		if (is_attachment()) $rpw_pagetype = 'attachment';
+		if (is_tax()) $rpw_pagetype = 'taxonomy';
+		if (is_author()) $rpw_pagetype = 'author';
+		if (is_search()) $rpw_pagetype = 'search';
+		if (is_404()) $rpw_pagetype = 'not_found';
+		if (!isset($rpw_pagetype)) $rpw_pagetype = 'login_page';
 		
 		// display only, if said so in the settings of the widget
 		
@@ -241,6 +255,12 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			global $wp_query, $post;
 			
 			$rpw_args['posts_per_page'] = $instance['posts_per_page'];
+			
+			if ($instance['sticky']) :
+			
+				$rpw_args['post__in'] = get_option('sticky_posts');
+			
+			endif;
 			
 			if (is_single()) $rpw_args['post__not_in'] = array($wp_query->get_queried_object_id());
 			
