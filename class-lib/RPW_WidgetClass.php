@@ -81,20 +81,20 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$rmtext = esc_attr($instance['rmtext']);
 		$rmclass = esc_attr($instance['rmclass']);
 		$style = esc_attr($instance['style']);
-		$homepage=esc_attr($instance['homepage']);
-		$frontpage=esc_attr($instance['frontpage']);
-		$page=esc_attr($instance['page']);
-		$category=esc_attr($instance['category']);
-		$single=esc_attr($instance['single']);
-		$date=esc_attr($instance['date']);
-		$archive=esc_attr($instance['archive']);
-		$tag=esc_attr($instance['tag']);
-		$attachment=esc_attr($instance['attachment']);
-		$taxonomy=esc_attr($instance['taxonomy']);
-		$author=esc_attr($instance['author']);
-		$search=esc_attr($instance['search']);
-		$not_found=esc_attr($instance['not_found']);
-		$login_page=esc_attr($instance['login_page']);
+		$homepage = $instance['homepage'];
+		$frontpage = $instance['frontpage'];
+		$page = $instance['page'];
+		$category = $instance['category'];
+		$single = $instance['single'];
+		$date = $instance['date'];
+		$archive = $instance['archive'];
+		$tag = $instance['tag'];
+		$attachment = $instance['attachment'];
+		$taxonomy = $instance['taxonomy'];
+		$author = $instance['author'];
+		$search = $instance['search'];
+		$not_found = $instance['not_found'];
+		$login_page = $instance['login_page'];
 		$show_date=esc_attr($instance['show_date']);
 		$h=esc_attr($instance['h']);
 		$alignment=esc_attr($instance['alignment']);
@@ -207,25 +207,27 @@ class A5_Recent_Post_Widget extends WP_Widget {
 	function widget($args, $instance) {
 		
 		// get the type of page, we're actually on
-		
-		if (is_front_page()) $rpw_pagetype = 'frontpage';
-		if (is_home()) $rpw_pagetype = 'homepage';
-		if (is_page()) $rpw_pagetype = 'page';
-		if (is_category()) $rpw_pagetype = 'category';
-		if (is_single()) $rpw_pagetype = 'single';
-		if (is_date()) $rpw_pagetype = 'date';
-		if (is_archive()) $rpw_pagetype = 'archive';
-		if (is_tag()) $rpw_pagetype = 'tag';
-		if (is_attachment()) $rpw_pagetype = 'attachment';
-		if (is_tax()) $rpw_pagetype = 'taxonomy';
-		if (is_author()) $rpw_pagetype = 'author';
-		if (is_search()) $rpw_pagetype = 'search';
-		if (is_404()) $rpw_pagetype = 'not_found';
-		if (!isset($rpw_pagetype)) $rpw_pagetype = 'login_page';
+	
+		if (is_front_page()) $pagetype[]='frontpage';
+		if (is_home()) $pagetype[]='homepage';
+		if (is_page()) $pagetype[]='page';
+		if (is_category()) $pagetype[]='category';
+		if (is_single()) $pagetype[]='single';
+		if (is_date()) $pagetype[]='date';
+		if (is_archive()) $pagetype[]='archive';
+		if (is_tag()) $pagetype[]='tag';
+		if (is_attachment()) $pagetype[]='attachment';
+		if (is_tax()) $pagetype[]='taxonomy';
+		if (is_author()) $pagetype[]='author';
+		if (is_search()) $pagetype[]='search';
+		if (is_404()) $pagetype[]='not_found';
+		if (!isset($pagetype)) $pagetype[]='login_page';
 		
 		// display only, if said so in the settings of the widget
 		
-		if ($instance[$rpw_pagetype]) :
+		foreach ($pagetype as $page) if ($instance[$page]) $show_widget = true;
+	
+		if ($show_widget) :
 		
 			// the widget is displayed	
 			extract( $args );

@@ -3,14 +3,14 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.5.4
+Version: 2.5.5
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
 Text Domain: a5-recent-posts
 */
 
-/*  Copyright 2012 - 2014  Waldemar Stoffel  (email : stoffel@atelier-fuenf.de)
+/*  Copyright 2012 - 2015  Waldemar Stoffel  (email : stoffel@atelier-fuenf.de)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
