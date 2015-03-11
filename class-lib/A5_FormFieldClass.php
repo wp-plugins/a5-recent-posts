@@ -15,7 +15,7 @@
 
 class A5_FormField {
 	
-	const version = '1.0 beta 20150131 CLP';
+	const version = '1.0 beta 20150131 RPW';
 	
 	public $formfield;
 	
