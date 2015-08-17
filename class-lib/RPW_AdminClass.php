@@ -11,8 +11,6 @@
  */
 class RPW_Admin extends A5_OptionPage {
 	
-	const language_file = 'a5-recent-posts';
-	
 	static $options;
 	
 	function __construct() {
@@ -47,7 +45,7 @@ class RPW_Admin extends A5_OptionPage {
 	 */
 	function add_admin_menu() {
 		
-		add_options_page('A5 Recent Post '.__('Settings', self::language_file), '<img alt="" src="'.plugins_url('a5-recent-posts/img/a5-icon-11.png').'"> A5 Recent Posts', 'administrator', 'a5-recent-posts-settings', array($this, 'build_options_page'));
+		add_options_page('A5 Recent Post '.__('Settings', 'a5-recent-posts'), '<img alt="" src="'.plugins_url('a5-recent-posts/img/a5-icon-11.png').'"> A5 Recent Posts', 'administrator', 'a5-recent-posts-settings', array($this, 'build_options_page'));
 		
 	}
 	
@@ -58,17 +56,17 @@ class RPW_Admin extends A5_OptionPage {
 	 */
 	function build_options_page() {
 		
-		self::open_page('A5 Recent Post Widget', __('http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget', self::language_file), 'a5-recent-posts', __('Plugin Support', self::language_file));
+		self::open_page('A5 Recent Post Widget', __('http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget', 'a5-recent-posts'), 'a5-recent-posts', __('Plugin Support', 'a5-recent-posts'));
 		
-		_e('Style the links of the widget. If you leave this empty, your theme will style the hyperlinks.', self::language_file);
+		_e('Style the links of the widget. If you leave this empty, your theme will style the hyperlinks.', 'a5-recent-posts');
 		
-        self::tag_it(__('Just input something like,', self::language_file), 'p', false, false, true);
+        self::tag_it(__('Just input something like,', 'a5-recent-posts'), 'p', false, false, true);
 				
         self::tag_it(self::tag_it('font-weight: bold;<br />color: #0000ff;<br />text-decoration: underline;', 'strong'), 'p', false, false, true);
 		
-		self::tag_it(__('to get fat, blue, underlined links.', self::language_file), 'p', false, false, true);
+		self::tag_it(__('to get fat, blue, underlined links.', 'a5-recent-posts'), 'p', false, false, true);
 		
-        self::tag_it(self::tag_it(__('You most probably have to use &#39;!important&#39; at the end of each line, to make it work.', self::language_file), 'strong'), 'p', false, false, true);
+        self::tag_it(self::tag_it(__('You most probably have to use &#39;!important&#39; at the end of each line, to make it work.', 'a5-recent-posts'), 'strong'), 'p', false, false, true);
 		
 		self::open_form('options.php');
 		
@@ -80,7 +78,7 @@ class RPW_Admin extends A5_OptionPage {
 		
 			self::open_tab();
 			
-			self::sortable('deep-down', self::debug_info(self::$options, __('Debug Info', self::language_file)));
+			self::sortable('deep-down', self::debug_info(self::$options, __('Debug Info', 'a5-recent-posts')));
 		
 			self::close_tab();
 		
@@ -99,25 +97,25 @@ class RPW_Admin extends A5_OptionPage {
 		
 		register_setting( 'rpw_options', 'rpw_options', array($this, 'validate') );
 		
-		add_settings_section('rpw_settings', __('Styling of the links', self::language_file), array($this, 'display_section'), 'rpw_styles');
+		add_settings_section('rpw_settings', __('Styling of the links', 'a5-recent-posts'), array($this, 'display_section'), 'rpw_styles');
 		
-		add_settings_field('rpw_link_style', __('Link style:', self::language_file), array($this, 'link_field'), 'rpw_styles', 'rpw_settings');
+		add_settings_field('rpw_link_style', __('Link style:', 'a5-recent-posts'), array($this, 'link_field'), 'rpw_styles', 'rpw_settings');
 		
-		add_settings_field('rpw_hover_style', __('Hover style:', self::language_file), array($this, 'hover_field'), 'rpw_styles', 'rpw_settings');
+		add_settings_field('rpw_hover_style', __('Hover style:', 'a5-recent-posts'), array($this, 'hover_field'), 'rpw_styles', 'rpw_settings');
 		
-		add_settings_field('use_own_css', __('Widget container:', self::language_file), array($this, 'rpw_display_css'), 'rpw_styles', 'rpw_settings', array(__('You can enter your own style for the widgets here. This will overwrite the styles of your theme.', self::language_file), __('If you leave this empty, you can still style every instance of the widget individually.', self::language_file)));
+		add_settings_field('use_own_css', __('Widget container:', 'a5-recent-posts'), array($this, 'rpw_display_css'), 'rpw_styles', 'rpw_settings', array(__('You can enter your own style for the widgets here. This will overwrite the styles of your theme.', 'a5-recent-posts'), __('If you leave this empty, you can still style every instance of the widget individually.', 'a5-recent-posts')));
 		
-		add_settings_field('rpw_compress', __('Compress Style Sheet:', self::language_file), array($this, 'compress_field'), 'rpw_styles', 'rpw_settings', array(__('Click here to compress the style sheet.', self::language_file)));
+		add_settings_field('rpw_compress', __('Compress Style Sheet:', 'a5-recent-posts'), array($this, 'compress_field'), 'rpw_styles', 'rpw_settings', array(__('Click here to compress the style sheet.', 'a5-recent-posts')));
 		
-		add_settings_field('rpw_inline', __('Debug:', self::language_file), array($this, 'inline_field'), 'rpw_styles', 'rpw_settings', array(__('If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay the styles inline. By clicking here you can do so. (It might be also much faster in some environments).', self::language_file)));
+		add_settings_field('rpw_inline', __('Debug:', 'a5-recent-posts'), array($this, 'inline_field'), 'rpw_styles', 'rpw_settings', array(__('If you can&#39;t reach the dynamical style sheet, you&#39;ll have to diplay the styles inline. By clicking here you can do so. (It might be also much faster in some environments).', 'a5-recent-posts')));
 		
-		if (self::$options['inline']) add_settings_field('rpw_priority', __('Priority of the inline style:', self::language_file), array($this, 'priority_field'), 'rpw_styles', 'rpw_settings', array(__('This only affects inline styles. Some other plugins could be using the same selectors as this one. In that case, writing your&#39;s later in the code might help.', self::language_file)));
+		if (self::$options['inline']) add_settings_field('rpw_priority', __('Priority of the inline style:', 'a5-recent-posts'), array($this, 'priority_field'), 'rpw_styles', 'rpw_settings', array(__('This only affects inline styles. Some other plugins could be using the same selectors as this one. In that case, writing your&#39;s later in the code might help.', 'a5-recent-posts')));
 		
 		$cachesize = count(self::$options['cache']);
 		
-		$entry = ($cachesize > 1) ? __('entries', self::language_file) : __('entry', self::language_file);
+		$entry = ($cachesize > 1) ? __('entries', 'a5-recent-posts') : __('entry', 'a5-recent-posts');
 		
-		if ($cachesize > 0) add_settings_field('rpw_reset', sprintf(__('Empty cache (%d %s):', self::language_file), count(self::$options['cache']), $entry), array($this, 'reset_field'), 'rpw_styles', 'rpw_settings', array(__('You can empty the plugin&#39;s cache here, if necessary.', self::language_file)));
+		if ($cachesize > 0) add_settings_field('rpw_reset', sprintf(__('Empty cache (%d %s):', 'a5-recent-posts'), count(self::$options['cache']), $entry), array($this, 'reset_field'), 'rpw_styles', 'rpw_settings', array(__('You can empty the plugin&#39;s cache here, if necessary.', 'a5-recent-posts')));
 		
 		add_settings_field('rpw_resize', false, array($this, 'resize_field'), 'rpw_styles', 'rpw_settings');
 	
@@ -125,7 +123,7 @@ class RPW_Admin extends A5_OptionPage {
 	
 	function display_section() {
 		
-		echo '<p>'.__('Just put some css code here.', self::language_file).'</p>';
+		echo '<p>'.__('Just put some css code here.', 'a5-recent-posts').'</p>';
 	
 	}
 	
@@ -194,7 +192,7 @@ class RPW_Admin extends A5_OptionPage {
 		
 			self::$options['cache'] = array();
 			
-			add_settings_error('rpw_options', 'empty-cache', __('Cache emptied.', self::language_file), 'updated');
+			add_settings_error('rpw_options', 'empty-cache', __('Cache emptied.', 'a5-recent-posts'), 'updated');
 			
 		endif;
 		

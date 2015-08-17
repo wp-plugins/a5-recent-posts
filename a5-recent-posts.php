@@ -3,11 +3,12 @@
 Plugin Name: A5 Recent Post Widget
 Plugin URI: http://wasistlos.waldemarstoffel.com/plugins-fur-wordpress/recent-post-widget
 Description: A5 Recent Posts Widget just displays the most recent post in a customizable widget. Set the colours of the links and border, show the widget on sites, that you define, ready.
-Version: 2.5.5
+Version: 2.5.6
 Author: Waldemar Stoffel
 Author URI: http://www.waldemarstoffel.com
 License: GPL3
 Text Domain: a5-recent-posts
+Domain Path: /languages
 */
 
 /*  Copyright 2012 - 2015  Waldemar Stoffel  (email : stoffel@atelier-fuenf.de)
@@ -41,6 +42,7 @@ if (!class_exists('A5_Excerpt')) require_once RPW_PATH.'class-lib/A5_ExcerptClas
 if (!class_exists('A5_FormField')) require_once RPW_PATH.'class-lib/A5_FormFieldClass.php';
 if (!class_exists('A5_OptionPage')) require_once RPW_PATH.'class-lib/A5_OptionPageClass.php';
 if (!class_exists('A5_DynamicFiles')) require_once RPW_PATH.'class-lib/A5_DynamicFileClass.php';
+if (!class_exists('A5_Widget')) require_once RPW_PATH.'class-lib/A5_WidgetClass.php';
 
 #loading plugin specific classes
 if (!class_exists('RPW_Admin')) require_once RPW_PATH.'class-lib/RPW_AdminClass.php';
@@ -49,7 +51,7 @@ if (!class_exists('A5_Recent_Post_Widget')) require_once RPW_PATH.'class-lib/RPW
 
 class RecentPostWidget {
 
-	const language_file = 'a5-recent-posts', version = 2.5;
+	const version = 2.5;
 	
 	private static $options;
 
@@ -64,7 +66,7 @@ class RecentPostWidget {
 		
 		// import laguage files
 
-		load_plugin_textdomain(self::language_file, false , basename(dirname(__FILE__)).'/languages');
+		load_plugin_textdomain('a5-recent-posts', false , basename(dirname(__FILE__)).'/languages');
 		
 		self::$options = get_option('rpw_options');
 		
@@ -93,8 +95,8 @@ class RecentPostWidget {
 	function register_links($links, $file) {
 		
 		if ($file == RPW_BASE) {
-			$links[] = '<a href="http://wordpress.org/extend/plugins/a5-recent-posts/faq/" target="_blank">'.__('FAQ', self::language_file).'</a>';
-			$links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YGA57UKZQVP4A" target="_blank">'.__('Donate', self::language_file).'</a>';
+			$links[] = '<a href="http://wordpress.org/extend/plugins/a5-recent-posts/faq/" target="_blank">'.__('FAQ', 'a5-recent-posts').'</a>';
+			$links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YGA57UKZQVP4A" target="_blank">'.__('Donate', 'a5-recent-posts').'</a>';
 		}
 		
 		return $links;
@@ -102,7 +104,7 @@ class RecentPostWidget {
 	
 	function register_action_links( $links, $file ) {
 		
-		if ($file == RPW_BASE) array_unshift($links, '<a href="'.admin_url( 'options-general.php?page=a5-recent-posts-settings' ).'">'.__('Settings', self::language_file).'</a>');
+		if ($file == RPW_BASE) array_unshift($links, '<a href="'.admin_url( 'options-general.php?page=a5-recent-posts-settings' ).'">'.__('Settings', 'a5-recent-posts').'</a>');
 	
 		return $links;
 	
@@ -138,7 +140,7 @@ class RecentPostWidget {
 		
 		$options_old = get_option('rpw_options');
 		
-		$options_new['css'] = (isset($options_old['rpw_css'])) ? $options_old['rpw_css'] : '';
+		$options_new['css'] = (isset($options_old['rpw_css'])) ? $options_old['rpw_css'] : $options_old['css'];
 		
 		$options_new['cache'] = array();
 		
@@ -148,7 +150,7 @@ class RecentPostWidget {
 		
 		$options_new['version'] = self::version;
 		
-		$options_new['css'] .= "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;".$options_new['css'];
+		if (!strstr($options_new['css'], 'hyphen')) $options_new['css'] .= "-moz-hyphens: auto;\n-o-hyphens: auto;\n-webkit-hyphens: auto;\n-ms-hyphens: auto;\nhyphens: auto;".$options_new['css'];
 		
 		update_option('rpw_options', $options_new);
 	
