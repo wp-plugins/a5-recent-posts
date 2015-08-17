@@ -24,9 +24,9 @@ class RPW_DynamicCSS extends A5_DynamicFiles {
 		
 		if (!array_key_exists('compress', self::$options)) self::$options['compress'] = false;
 		
-		parent::A5_DynamicFiles('wp', 'css', 'all', false, self::$options['inline'], self::$options['priority']);
+		parent::__construct('wp', 'css', 'all', false, self::$options['inline'], self::$options['priority']);
 		
-		$eol = (self::$options['compress']) ? '' : "\r\n";
+		$eol = (self::$options['compress']) ? '' : "\n";
 		$tab = (self::$options['compress']) ? ' ' : "\t";
 		
 		$css_selector = 'widget_a5_recent_post_widget[id^="a5_recent_post_widget"]';

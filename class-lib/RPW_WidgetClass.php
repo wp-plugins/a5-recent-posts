@@ -9,18 +9,16 @@
  * building the actual widget
  *
  */ 
-class A5_Recent_Post_Widget extends WP_Widget {
-	
-	const language_file = 'a5-recent-posts';
+class A5_Recent_Post_Widget extends A5_Widget {
 	
 	private static $options;
  
 	function __construct() {
  
-		$widget_opts = array( 'description' => __('You can display the most recent post(s) in this widget. Define, on what pages the widget will show.', self::language_file) );
+		$widget_opts = array( 'description' => __('You can display the most recent post(s) in this widget. Define, on what pages the widget will show.', 'a5-recent-posts') );
 		$control_opts = array( 'width' => 400 );
 		
-		parent::WP_Widget(false, $name = 'A5 Recents Post', $widget_opts, $control_opts);
+		parent::__construct(false, $name = 'A5 Recents Post', $widget_opts, $control_opts);
 		
 		self::$options = get_option('rpw_options');
 	
@@ -104,59 +102,34 @@ class A5_Recent_Post_Widget extends WP_Widget {
 		$words = esc_attr($instance['words']);
 		$sticky = esc_attr($instance['sticky']);
 		
-		$link_options = array (array('post', __('The post', self::language_file)), array('extern', __('External link', self::language_file)), array('page', __('The attachment page', self::language_file)), array('file', __('The attachment file', self::language_file)), array('none', __('Don&#39;t link', self::language_file)));
+		$link_options = array (array('post', __('The post', 'a5-recent-posts')), array('extern', __('External link', 'a5-recent-posts')), array('page', __('The attachment page', 'a5-recent-posts')), array('file', __('The attachment file', 'a5-recent-posts')), array('none', __('Don&#39;t link', 'a5-recent-posts')));
 		
-		$options = array (array('top', __('Above thumbnail', self::language_file)) , array('bottom', __('Under thumbnail', self::language_file)), array('middel', __('Under date', self::language_file)), array('none', __('Don&#39;t show title', self::language_file)));
+		$options = array (array('top', __('Above thumbnail', 'a5-recent-posts')) , array('bottom', __('Under thumbnail', 'a5-recent-posts')), array('middel', __('Under date', 'a5-recent-posts')), array('none', __('Don&#39;t show title', 'a5-recent-posts')));
 		
-		$items = array (array('none', __('Under image', self::language_file)), array('right', __('Left of image', self::language_file)), array('left', __('Right of image', self::language_file)), array('notext', __('Don&#39;t show excerpt', self::language_file)));
-		
-		$date_options = array (array('top', __('Above post', self::language_file)), array('middel', __('Under thumbnail', self::language_file)), array('bottom', __('Under post', self::language_file)), array('none', __('Don&#39;t show date', self::language_file)));
-		
-		$headings = array(array('1', 'h1'), array('2', 'h2'), array('3', 'h3'), array('4', 'h4'), array('5', 'h5'), array('6', 'h6'));
+		$date_options = array (array('top', __('Above post', 'a5-recent-posts')), array('middel', __('Under thumbnail', 'a5-recent-posts')), array('bottom', __('Under post', 'a5-recent-posts')), array('none', __('Don&#39;t show date', 'a5-recent-posts')));
 		
 		$base_id = 'widget-'.$this->id_base.'-'.$this->number.'-';
 		$base_name = 'widget-'.$this->id_base.'['.$this->number.']';
 		
-		$pages = array (
-			array($base_id.'homepage', $base_name.'[homepage]', $homepage, __('Homepage', self::language_file)),
-			array($base_id.'frontpage', $base_name.'[frontpage]', $frontpage, __('Frontpage (e.g. a static page as homepage)', self::language_file)),
-			array($base_id.'page', $base_name.'[page]', $page, __('&#34;Page&#34; pages', self::language_file)),
-			array($base_id.'category', $base_name.'[category]', $category, __('Category pages', self::language_file)),
-			array($base_id.'single', $base_name.'[single]', $single, __('Single post pages', self::language_file)),
-			array($base_id.'date', $base_name.'[date]', $date, __('Archive pages', self::language_file)),
-			array($base_id.'archive', $base_name.'[archive]', $date, __('Post type archives', self::language_file)),
-			array($base_id.'tag', $base_name.'[tag]', $tag, __('Tag pages', self::language_file)),
-			array($base_id.'attachment', $base_name.'[attachment]', $attachment, __('Attachments', self::language_file)),
-			array($base_id.'taxonomy', $base_name.'[taxonomy]', $taxonomy, __('Custom Taxonomy pages (only available, if having a plugin)', self::language_file)),
-			array($base_id.'author', $base_name.'[author]', $author, __('Author pages', self::language_file)),
-			array($base_id.'search', $base_name.'[search]', $search, __('Search Results', self::language_file)),
-			array($base_id.'not_found', $base_name.'[not_found]', $not_found, __('&#34;Not Found&#34;', self::language_file)),
-			array($base_id.'login_page', $base_name.'[login_page]', $login_page, __('Login Page (only available, if having a plugin)', self::language_file))
-		);
-		
-		$checkall = array($base_id.'checkall', $base_name.'[checkall]', __('Check all', self::language_file));
-		
-		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', self::language_file), array('space' => true, 'class' => 'widefat'));
-		a5_number_field($base_id.'posts_per_page', $base_name.'[posts_per_page]', $posts_per_page, __('How many posts should be displayed in the widget', self::language_file), array('space' => true, 'size' => 4, 'step' => 1, 'min' => 1));
-		a5_checkbox($base_id.'sticky', $base_name.'[sticky]', $target, __('Check to have only sticky posts.', self::language_file), array('space' => true));
-		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
-		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', self::language_file), false, array('space' => true));
-		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', self::language_file), array('space' => true));
-		a5_checkbox($base_id.'thumb', $base_name.'[thumb]', $thumb, sprintf(__('Check to %snot%s display the thumbnail of the post.', self::language_file), '<strong>', '</strong>'), array('space' => true));
-		a5_text_field($base_id.'imgborder', $base_name.'[imgborder]', $imgborder, sprintf(__('If wanting a border around the image, write the style here. %s would make it a black border, 1px wide.', self::language_file), '<strong>1px solid #000000</strong>'), array('space' => true, 'class' => 'widefat'));
-		a5_select($base_id.'headline', $base_name.'[headline]', $options, $headline, __('Choose, whether or not to display the title and whether it comes above or under the thumbnail.', self::language_file), false, array('space' => true));
-		a5_select($base_id.'h', $base_name.'[h]', $headings, $h, __('Weight of the Post Title:', self::language_file), false, array('space' => true));
-		a5_select($base_id.'show_date', $base_name.'[show_date]', $date_options, $show_date, __('Choose, whether or not to display the publishing date and whether it comes above or under the post.', self::language_file), false, array('space' => true));
-		a5_select($base_id.'alignment', $base_name.'[alignment]', $items, $alignment, __('Choose, whether or not to display the excerpt and whether it comes under the thumbnail or next to it.', self::language_file), false, array('space' => true));
-		a5_checkbox($base_id.'noshorts', $base_name.'[noshorts]', $noshorts, __('Check to suppress shortcodes in the widget (in case the content is showing).', self::language_file), array('space' => true));
-		a5_checkbox($base_id.'filter', $base_name.'[filter]', $filter, __('Check to return the excerpt unfiltered (might avoid interferences with other plugins).', self::language_file), array('space' => true));
-		a5_number_field($base_id.'wordcount', $base_name.'[wordcount]', $wordcount, __('In case there is no excerpt defined, how many sentences are displayed:', self::language_file), array('space' => true, 'size' => 4, 'step' => 1));
-		a5_checkbox($base_id.'words', $base_name.'[words]', $words, __('Check to display words instead of sentences.', self::language_file), array('space' => true));
-		a5_checkbox($base_id.'readmore', $base_name.'[readmore]', $readmore, __('Check to have an additional &#39;read more&#39; link at the end of the excerpt.', self::language_file), array('space' => true));	
-		a5_text_field($base_id.'rmtext', $base_name.'[rmtext]', $rmtext, sprintf(__('Write here some text for the &#39;read more&#39; link. By default, it is %s:', self::language_file), '[&#8230;]'), array('space' => true, 'class' => 'widefat'));
-		a5_text_field($base_id.'rmclass', $base_name.'[rmclass]', $rmclass, __('If you want to style the &#39;read more&#39; link, you can enter a class here.', self::language_file), array('space' => true, 'class' => 'widefat'));
-		a5_checkgroup(false, false, $pages, __('Check, where you want to show the widget. By default, it is showing on the homepage and the category pages:', self::language_file), $checkall);
-		a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', self::language_file), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
+		a5_text_field($base_id.'title', $base_name.'[title]', $title, __('Title:', 'a5-recent-posts'), array('space' => true, 'class' => 'widefat'));
+		a5_number_field($base_id.'posts_per_page', $base_name.'[posts_per_page]', $posts_per_page, __('How many posts should be displayed in the widget', 'a5-recent-posts'), array('space' => true, 'size' => 4, 'step' => 1, 'min' => 1));
+		a5_checkbox($base_id.'sticky', $base_name.'[sticky]', $target, __('Check to have only sticky posts.', 'a5-recent-posts'), array('space' => true));
+		a5_number_field($base_id.'width', $base_name.'[width]', $width, __('Width of the thumbnail (in px):', 'a5-recent-posts'), array('space' => true, 'size' => 4, 'step' => 1));
+		a5_select($base_id.'link', $base_name.'[link]', $link_options, $link, __('Choose here to what you want the widget to link to. It will link to the post by default.', 'a5-recent-posts'), false, array('space' => true));
+		a5_checkbox($base_id.'target', $base_name.'[target]', $target, __('Check to open the link in another browser window.', 'a5-recent-posts'), array('space' => true));
+		a5_checkbox($base_id.'thumb', $base_name.'[thumb]', $thumb, sprintf(__('Check to %snot%s display the thumbnail of the post.', 'a5-recent-posts'), '<strong>', '</strong>'), array('space' => true));
+		a5_text_field($base_id.'imgborder', $base_name.'[imgborder]', $imgborder, sprintf(__('If wanting a border around the image, write the style here. %s would make it a black border, 1px wide.', 'a5-recent-posts'), '<strong>1px solid #000000</strong>'), array('space' => true, 'class' => 'widefat'));
+		a5_select($base_id.'headline', $base_name.'[headline]', $options, $headline, __('Choose, whether or not to display the title and whether it comes above or under the thumbnail.', 'a5-recent-posts'), false, array('space' => true));
+		parent::select_heading($instance);
+		a5_select($base_id.'show_date', $base_name.'[show_date]', $date_options, $show_date, __('Choose, whether or not to display the publishing date and whether it comes above or under the post.', 'a5-recent-posts'), false, array('space' => true));
+		parent::textalign($instance);
+		a5_checkbox($base_id.'noshorts', $base_name.'[noshorts]', $noshorts, __('Check to suppress shortcodes in the widget (in case the content is showing).', 'a5-recent-posts'), array('space' => true));
+		a5_checkbox($base_id.'filter', $base_name.'[filter]', $filter, __('Check to return the excerpt unfiltered (might avoid interferences with other plugins).', 'a5-recent-posts'), array('space' => true));
+		a5_number_field($base_id.'wordcount', $base_name.'[wordcount]', $wordcount, __('In case there is no excerpt defined, how many sentences are displayed:', 'a5-recent-posts'), array('space' => true, 'size' => 4, 'step' => 1));
+		a5_checkbox($base_id.'words', $base_name.'[words]', $words, __('Check to display words instead of sentences.', 'a5-recent-posts'), array('space' => true));
+		parent::read_more($instance);
+		parent::page_checkgroup($instance);
+		a5_textarea($base_id.'style', $base_name.'[style]', $style, sprintf(__('Here you can finally style the widget. Simply type something like%sto get just a gray outline and a padding of 10 px. If you leave that section empty, your theme will style the widget.', 'a5-recent-posts'), '<br /><strong>border: 2px solid;<br />border-color: #cccccc;<br />padding: 10px;</strong><br />'), array('space' => true, 'class' => 'widefat', 'style' => 'height: 60px;'));
 		a5_resize_textarea($base_id.'style', true);
 	
 	} // form
@@ -206,28 +179,11 @@ class A5_Recent_Post_Widget extends WP_Widget {
  
 	function widget($args, $instance) {
 		
-		// get the type of page, we're actually on
-	
-		if (is_front_page()) $pagetype[]='frontpage';
-		if (is_home()) $pagetype[]='homepage';
-		if (is_page()) $pagetype[]='page';
-		if (is_category()) $pagetype[]='category';
-		if (is_single()) $pagetype[]='single';
-		if (is_date()) $pagetype[]='date';
-		if (is_archive()) $pagetype[]='archive';
-		if (is_tag()) $pagetype[]='tag';
-		if (is_attachment()) $pagetype[]='attachment';
-		if (is_tax()) $pagetype[]='taxonomy';
-		if (is_author()) $pagetype[]='author';
-		if (is_search()) $pagetype[]='search';
-		if (is_404()) $pagetype[]='not_found';
-		if (!isset($pagetype)) $pagetype[]='login_page';
-		
-		// display only, if said so in the settings of the widget
-		
-		foreach ($pagetype as $page) if ($instance[$page]) $show_widget = true;
+		$show_widget = parent::check_output($instance);
 	
 		if ($show_widget) :
+		
+			rewind_posts();
 		
 			// the widget is displayed	
 			extract( $args );
@@ -242,7 +198,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 			endif;
 			
-			$eol = "\r\n";
+			$eol = "\n";
 			
 			// widget starts
 			
@@ -272,6 +228,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 			
 				$rpw_posts->the_post();
 				
+				setup_postdata($post);
+				
 				switch ($instance['link']) :
 				
 					case 'none' :
@@ -299,7 +257,8 @@ class A5_Recent_Post_Widget extends WP_Widget {
 							'post_type' => 'attachment',
 							'posts_per_page' => 1,
 							'post_status' => null,
-							'post_parent' => $post->ID
+							'post_parent' => $post->ID,
+							'order' => 'ASC'
 						);
 						
 						$rpw_attachments = get_posts( $args );
@@ -324,7 +283,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 					
 					endswitch;
 					
-				$rpw_tags = A5_Image::tags(self::language_file);
+				$rpw_tags = A5_Image::tags();
 				
 				$rpw_image_alt = $rpw_tags['image_alt'];
 				$rpw_image_title = $rpw_tags['image_title'];
@@ -384,7 +343,7 @@ class A5_Recent_Post_Widget extends WP_Widget {
 				
 					$rpw_image = ($rpw_link) ? '<a href="'.$rpw_link.'">'.$rpw_img_tag.'</a>'.$eol : $rpw_img_tag.$eol;
 					
-					$rpw_image .= '<div style="clear: both;"></div>'.$eol;
+					if ($instance['alignment'] == 'none' || $instance['alignment'] == 'notext') $rpw_image .= '<div style="clear: both;"></div>'.$eol;
 					
 				endif;
 				
@@ -434,8 +393,6 @@ class A5_Recent_Post_Widget extends WP_Widget {
 				if ($instance['show_date'] == 'middel' && $instance['headline'] == 'middel') echo $rpw_headline.$eol;
 				
 				if ($instance['alignment'] == 'left' || $instance['alignment'] == 'right') echo $eol.do_shortcode($rpw_text).$eol;
-				
-				echo '<div style="clear: both;"></div>'.$eol;
 				
 				if ($instance['alignment'] == 'none') echo do_shortcode($rpw_text).$eol;
 				

@@ -5,7 +5,7 @@
  * Class A5 Excerpt
  *
  * @ A5 Plugin Framework
- * Version: 1.0 beta 20150131
+ * Version: 1.0 beta 20150629
  *
  * Gets the excerpt of a post according to some parameters
  *
@@ -53,7 +53,9 @@ class A5_Excerpt {
 				
 				//erase videos
 				
-				$text = preg_replace('/[^"](https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$][^"]/i', '', $text);
+				$pattern = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';
+				
+				$text = preg_replace($pattern, '', $text);
 				
 				$length = (isset($count)) ? $count : 3;
 				
